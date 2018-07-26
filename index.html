@@ -132,7 +132,7 @@ tree -L n 查看层数，n为层数
 tree -P 配合通配符使用*
 </code></pre><h2 id="dd命令"><a href="#dd命令" class="headerlink" title="dd命令"></a>dd命令</h2><pre><code>$ dd if=/dev/zero of=bigfile bs=1M count=100
 创建一个名为bigfile，大小为100M的文件。
-</code></pre><h2 id="mkdir命令"><a href="#mkdir命令" class="headerlink" title="mkdir命令"></a>mkdir命令</h2><p>mkdir -p 自动创建不存在的子目录<br>创建空目录<br>eg：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@Souler6 ~]<span class="comment"># mkdir /app/dir1/&#123;x/&#123;a,b&#125;,y/&#123;c,d&#125;&#125;</span></span><br><span class="line">mkdir: cannot create directory /app/dir1/x/a<span class="string">': No such file or directory mkdir: cannot create directory/app/dir1/x/b’: No such file or directory</span></span><br><span class="line"><span class="string">mkdir: cannot create directory /app/dir1/y/c'</span>: No such file or directory mkdir: cannot create directory/app/dir1/y/d’: No such file or directory</span><br><span class="line"><span class="comment">#报错原因，因为没加-p选项，不会自动创建不存在的子目录，我们可以尝试加参数后在运行</span></span><br><span class="line">[root@Souler6 ~]<span class="comment"># mkdir -pv /app/dir1/&#123;x/&#123;a,b&#125;,y/&#123;c,d&#125;&#125;</span></span><br><span class="line">mkdir: created directory /app/dir1 mkdir: created directory/app/dir1/x</span><br><span class="line">mkdir: created directory /app/dir1/x/a mkdir: created directory/app/dir1/x/b</span><br><span class="line">mkdir: created directory /app/dir1/y mkdir: created directory/app/dir1/y/c</span><br><span class="line">mkdir: created directory /app/dir1/y/d</span><br><span class="line"><span class="comment">#加了-p选项就创建成功了，-v是显示创建过程</span></span><br></pre></td></tr></table></figure></p>
+</code></pre><h2 id="mkdir命令"><a href="#mkdir命令" class="headerlink" title="mkdir命令"></a>mkdir命令</h2><p>mkdir -p 自动创建不存在的子目录<br>创建空目录<br>eg：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@Souler6 ~]<span class="comment"># mkdir /app/dir1/&#123;x/&#123;a,b&#125;,y/&#123;c,d&#125;&#125;</span></span><br><span class="line">mkdir: cannot create directory /app/dir1/x/a: No such file or directory mkdir: cannot create directory/app/dir1/x/b’: No such file or directory</span><br><span class="line">mkdir: cannot create directory /app/dir1/y/c: No such file or directory mkdir: cannot create directory/app/dir1/y/d’: No such file or directory</span><br><span class="line"><span class="comment">#报错原因，因为没加-p选项，不会自动创建不存在的子目录，我们可以尝试加参数后在运行</span></span><br><span class="line">[root@Souler6 ~]<span class="comment"># mkdir -pv /app/dir1/&#123;x/&#123;a,b&#125;,y/&#123;c,d&#125;&#125;</span></span><br><span class="line">mkdir: created directory /app/dir1 mkdir: created directory/app/dir1/x</span><br><span class="line">mkdir: created directory /app/dir1/x/a mkdir: created directory/app/dir1/x/b</span><br><span class="line">mkdir: created directory /app/dir1/y mkdir: created directory/app/dir1/y/c</span><br><span class="line">mkdir: created directory /app/dir1/y/d</span><br><span class="line"><span class="comment">#加了-p选项就创建成功了，-v是显示创建过程</span></span><br></pre></td></tr></table></figure></p>
 <pre><code>[root@Souler6 ~]# tree /app/dir1/
 /app/dir1/
 ├── x
@@ -235,7 +235,8 @@ total 104
 <p>根据以上分析可以得出<br>同分区中<br>mv改名后，文件数据没任何变化<br>mv移动文件时，节点编号不会发生改变<br>mv覆盖文件时，会把节点编号一起覆盖掉<br>跨分区的移动<br>mv移动后，节点编号会发生改变</p>
 <p><strong>ln -s f1 f2</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@Souler6 mv]<span class="comment"># ll -i ../ln/</span></span><br><span class="line">total 0</span><br><span class="line">524290 -rw-r–r–. 1 root root 0 Jul 26 12:45 f1 <span class="comment">#源文件的节点编号为524290</span></span><br><span class="line">[root@Souler6 mv]<span class="comment"># ln -s ../../app/ln/f1 /app/mv/f3 #可以理解成将相对路径下f1文件的快捷方式发送到绝对路径并起名为f3</span></span><br><span class="line">[root@Souler6 mv]<span class="comment"># ll -i ../mv/</span></span><br><span class="line">total 0</span><br><span class="line">131076 lrwxrwxrwx. 1 root root 10 Jul 26 13:01 f3 -&gt; ../../app/ln/f1<span class="comment">#快捷方式的节点为131076</span></span><br><span class="line"></span><br><span class="line">[root@Souler6 mv]<span class="comment"># tree /app/</span></span><br><span class="line">/app/</span><br><span class="line">├── f2</span><br><span class="line">├── ln</span><br><span class="line">│   └── f1</span><br><span class="line">└── mv</span><br><span class="line">    └── f3 -&gt; /app/ln/f1</span><br><span class="line">2 directories, 3 files</span><br></pre></td></tr></table></figure></p>
 <p>根据以上分析可以得出，<br>创建快捷方式需指定相对路径，再指定存放的绝对路径<br>快捷方式也会被单独分配一个节点，且所占大小与路径字符有关<br>创建同分区中和跨分区的软链接<br>ln -s 软链接都会被分配一个新的节点编号</p>
-<pre><code>xargs touch 突破创建文件个数的限制（待补充）
+<p><strong>xargs touch 突破创建文件个数的限制</strong></p>
+<pre><code>[root@Souler6 ~]# echo f{1..100000} | xargs touch
 </code></pre><p>##inode 表结构的直接指针与间接指针<br>直接指针</p>
 <pre><code>12共有个直接指针，每个指针指向一个大小为4k的数据块，最多存储48k，但存储的数据超过48k则需要用到间接指针来存储更大的数据
 </code></pre><p>间接指针</p>
@@ -303,7 +304,7 @@ EOF
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/07/26/命令、索引节点、标准IO和管道/" data-id="cjk2jalkt00008sisnk9bb512" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/07/26/命令、索引节点、标准IO和管道/" data-id="cjk2jqqlf0003x8is4usq4hcp" class="article-share-link">Share</a>
       
       
     </footer>
@@ -723,7 +724,7 @@ cp[选项].. 源 目的
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/07/25/关于文件系统，以及history、cd、ls、touch、cp命令/" data-id="cjk2fmouz000114isbom1vone" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/07/25/关于文件系统，以及history、cd、ls、touch、cp命令/" data-id="cjk2jqqkv0000x8isrnz7p4hp" class="article-share-link">Share</a>
       
       
     </footer>
@@ -867,7 +868,7 @@ $ git push origin master
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/07/22/个人blog搭建（纯属笔记，不做任何解释）/" data-id="cjk2fmout000014issm3688v0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/07/22/个人blog搭建（纯属笔记，不做任何解释）/" data-id="cjk2jqql00001x8iso7ysq3he" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1372,7 +1373,7 @@ $ command --help
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/07/21/linux基础知识/" data-id="cjk2fmovb000314isfi8mpuze" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/07/21/linux基础知识/" data-id="cjk2jqqle0002x8isv7a08seh" class="article-share-link">Share</a>
       
       
     </footer>
