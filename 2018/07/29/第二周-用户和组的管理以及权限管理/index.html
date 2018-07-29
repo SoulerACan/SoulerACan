@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>用户和组的管理以及权限管理 | Souler ACan’s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="DAY 6 linux的安全模型、用户账号以及用户组的介绍介绍安全3A 资源分派：     Authentication：认证     Authorization：授权     Accouting|Audition：审计 用户user 令牌token,identity Linux用户：Username/UID 管理员：root, 0 普通用户：1-60000 自动分配     系统用户：1-499">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用户和组的管理以及权限管理">
+<meta property="og:url" content="http://yoursite.com/2018/07/29/第二周-用户和组的管理以及权限管理/index.html">
+<meta property="og:site_name" content="Souler ACan’s blog">
+<meta property="og:description" content="DAY 6 linux的安全模型、用户账号以及用户组的介绍介绍安全3A 资源分派：     Authentication：认证     Authorization：授权     Accouting|Audition：审计 用户user 令牌token,identity Linux用户：Username/UID 管理员：root, 0 普通用户：1-60000 自动分配     系统用户：1-499">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-07-29T12:17:55.949Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="用户和组的管理以及权限管理">
+<meta name="twitter:description" content="DAY 6 linux的安全模型、用户账号以及用户组的介绍介绍安全3A 资源分派：     Authentication：认证     Authorization：授权     Accouting|Audition：审计 用户user 令牌token,identity Linux用户：Username/UID 管理员：root, 0 普通用户：1-60000 自动分配     系统用户：1-499">
+  
+    <link rel="alternate" href="/atom.xml" title="Souler ACan’s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Souler ACan’s blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">who am i ？</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-第二周-用户和组的管理以及权限管理" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/07/29/第二周-用户和组的管理以及权限管理/" class="article-date">
+  <time datetime="2018-07-29T12:00:00.000Z" itemprop="datePublished">2018-07-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      用户和组的管理以及权限管理
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="DAY-6"><a href="#DAY-6" class="headerlink" title="DAY 6"></a>DAY 6</h1><hr>
+<h1 id="linux的安全模型、用户账号以及用户组的介绍"><a href="#linux的安全模型、用户账号以及用户组的介绍" class="headerlink" title="linux的安全模型、用户账号以及用户组的介绍"></a>linux的安全模型、用户账号以及用户组的介绍</h1><p><strong>介绍安全3A</strong></p>
+<pre><code>资源分派：
+    Authentication：认证
+    Authorization：授权
+    Accouting|Audition：审计
+</code></pre><p><strong>用户user</strong></p>
+<pre><code>令牌token,identity
+Linux用户：Username/UID
+管理员：root, 0
+普通用户：1-60000 自动分配
+    系统用户：1-499, 1-999（CentOS7）
+        对守护进程获取资源进行权限分配
+登录用户：500+, 1000+（CentOS7）
+    交互式登录
+</code></pre><p><strong>组group</strong></p>
+<pre><code>Linux组：Groupname/GID
+管理员组：root, 0
+普通组：
+    系统组：1-499, 1-999（CENTOS7）
+    普通组：500+, 1000+（CENTOS7）
+</code></pre><p><strong>安全上下文</strong></p>
+<pre><code>Linux安全上下文
+    运行中的程序：进程(process)
+    以进程发起者的身份运行：
+        root: /bin/cat
+        mage: /bin/cat
+进程所能够访问资源的权限取决于进程的运行者的身份
+</code></pre><p><strong>组的类别</strong></p>
+<pre><code>Linux组的类别
+    用户的主要组(primary group)
+        用户必须属于一个且只有一个主组组名同用户名，且仅包含一个用户，私有组
+    用户的附加组(supplementary group)
+        一个用户可以属于零个或多个辅助组
+</code></pre><p><strong>关于ps aux</strong></p>
+<pre><code>许多进程在系统启动了就已经自动运行，这些进程属于系统用户，非人使用的。        
+    系统用户使用的shell类型为/bin/nologin，
+</code></pre><h1 id="用户和组的管理"><a href="#用户和组的管理" class="headerlink" title="用户和组的管理"></a>用户和组的管理</h1><p><strong>关于用户和组的一些关键文件</strong></p>
+<pre><code>/etc/passwd  存放用户信息
+    eg: xu:x:1000:1000:xu,can,bin,13048973251:/home/xu:/bin/bash
+    对应格式: 用户名：口令：uid：gid：用户信息注释：家目录：shell类型
+
+/etc/shadow  存放用户口令
+    eg：xu:$6$./CWkeEIb89Q$mmkk1xypAQ1vLXkAQZENBGI8dtXmflwU0npV4UaMhB7BI2hGmHtQFNYvz30BkY7sRaYvyq1tIblxH/lZi4CAO.:17741:0:99999:7:::
+    对应格式：用户名：口令：口令创建日期：口令最短有效期：密码有效期：密码过期前几天提示：密码过期后的宽限期：账户的有效期：保留未使用
+
+        shadow文件格式，shadow中8个冒号隔成9个字段
+
+        第一段 用户登录名
+        第二段 加密口令很长
+            （！！表示加锁） 
+            sha512加密算法512位 $1:md5加密算法（已被破解）
+            $6:sha512加密算法（！！表示加锁）
+            算法的后面会加$（salt）$ 称为salt盐
+            salt盐 不一样
+            王小云：破解md5，sha1
+            /etc/login.defs 用户口令相关文件，存放了默认的加密算法
+            更改算法：
+            authconfig --passalgo=sha256 --update
+        第三段
+            上一次口令更改时间天数（以1970位参考，）
+        第四段
+            更换密码所需时间间隔（例如，3，则表示每更换一次密码后，想再次更改密码需要等待3天才能更换密码）
+        第五段
+            密码有效期
+        第六段
+            密码过期的前几天会提示你更换密码
+        第七段
+            密码过期后的宽限期
+        第八段
+            账户的有效期
+            chage &lt;用户名&gt; 
+            可以更改指定用户的shadow中第3段到第8段的信息
+        第九段
+            保留未使用
+
+
+/etc/group   存放组信息
+    eg：xu:x:1000:xu
+    对应格式：组名：口令：组id：该组作为附加组时的成员
+
+/etc/gshadow 存放组口令
+    eg：xu:$6$V63Bs/1moqF/$GqgjT3Nj8bBSW4xxF0IAn7MCdf2ClS8fZLPOwSJ5n8M8X.MXKgY1GoTNFbTyw8da0kN5wtKZrnC6bSvW3YMf//::
+    对应格式：组名：口令：组管理员列表：以当前组为附加组的用户列表
+
+/etc/default/useradd
+    该文件存放了用户口令相关文件，该文件中定义了创建新用户的默认配置
+        [root@Souler7 ~]# useradd -D
+        GROUP=100
+        HOME=/home  #默认家目录创建路径
+        INACTIVE=-1  #口令过期后，默认不锁定
+        EXPIRE=   #有效期
+        SHELL=/bin/bash #默认shell
+        SKEL=/etc/skel  #新建家目录的模板，都是隐藏文件
+        CREATE_MAIL_SPOOL=yes  #默认创建邮箱
+    列出/etc/default/useradd的内容
+        useradd -D
+        useradd -D=cat /etc/default/useradd
+
+/etc/login.defs
+    该文件最后两行配置了了口令的加密算法
+    eg：# Use SHA512 to encrypt password.
+        ENCRYPT_METHOD SHA512
+/etc/skel/ -a
+    该文件是存放了家目录的模板文件
+        [root@Souler7 ~]# ll -a /etc/skel/
+        total 24
+        drwxr-xr-x.   3 root root   78 Apr 11 12:59 .
+        drwxr-xr-x. 139 root root 8192 Jul 29 16:05 ..
+        -rw-r--r--.   1 root root   18 Apr 11 08:53 .bash_logout
+        -rw-r--r--.   1 root root  193 Apr 11 08:53 .bash_profile
+        -rw-r--r--.   1 root root  231 Apr 11 08:53 .bashrc
+        drwxr-xr-x.   4 root root   39 Jul 18 14:47 .mozilla
+</code></pre><p><strong>关于getent</strong></p>
+<pre><code>列出/etc/passwd的内容
+    getent passwd
+    getent passwd=cat /etc/passwd  
+    getent passwd &lt;username&gt; 查看指定用户的passwd信息
+
+列出/etc/shadow的内容
+    getent shadow
+    getent shadow=cat /etc/shadow
+    getent shadow &lt;username&gt; 查看指定用户的shadow信息
+
+列出/etc/group的内容
+    getent group
+    getent group=cat /etc/group
+    getent group &lt;username&gt; 查看指定组的group信息
+
+列出/etc/gshadow的内容
+    getent gshadow
+    getent gshadow=cat /etc/gshadow
+    getent gshadow &lt;username&gt; 查看指定的gshadow信息
+</code></pre><p><strong>关于用户的创建和管理</strong><br>（常用与给系统服务创建账号）</p>
+<pre><code>useradd命令： 用于创建用户
+    useradd = adduser
+    useradd -D =cat /etc/default/useradd
+    （rpm -q -scripts postfix 查看useradd的常用格式）
+    选项：
+        useradd -d &lt;路径&gt;      指定家目录
+        useradd -M             不创建家目录
+        useradd -g &lt;groupname&gt; 指定主组
+        useradd -G &lt;groupname&gt; 附加组
+        useradd -c &quot;注释&quot;       用户的注释信息
+        useradd -s shell       指定使用shell类型，不指定默认使用/bin/bash
+        useradd -r             创建系统，创建目录默认不创建家目录
+        useradd -u &lt;uid&gt;       指定uid
+        useradd -N             自动加入users组
+        useradd -o &lt;uid&gt;       避免同id冲突
+
+usermod命令：用于修改用户属性（不常用）
+    选项：
+        usermod -G 组 用户     增加附加组，且覆盖已有附加组
+        usermod -aG 组 用户    追加附加组
+        usermod -G &quot;&quot; 用户     清除所有附加组
+        usermod -L 用户        给用户加锁
+        usermod -U 用户        给用户解锁
+
+userdel命令：用于删除用户
+    userdel &lt;用户&gt;    删除用户
+    选项：
+        userdel -r &lt;用户&gt; 删除用户及其家目录
+
+用户相关的其他命令
+
+    chfn命令（修改用户的描述信息）
+        用法：
+        chfn &lt;用户&gt;修改指定用户描述信息，不指定用户名则默认修改当前用户的描述信息
+
+    finger命令（查看用户的描述信息，需自行安装，否则无效）
+        用法：
+        finger &lt;用户&gt; 查看指定用户描述信息
+
+    chsh命令（修改用户shell类型）
+        用法：
+        chsh -s shell &lt;用户&gt; 更改用户的shell类型
+</code></pre><p><strong>关于用户口令</strong></p>
+<pre><code>passwd命令：用与更改用户口令
+    选项：            
+        passwd -l &lt;用户&gt; 双重锁               类似：usermod -L &lt;用户&gt; 单锁
+        passwd -u &lt;用户&gt; 解双重锁             类似：usermod -U &lt;用户&gt; 解单锁
+        passwd -d &lt;用户&gt; 清空用户口令
+        passwd -e &lt;用户&gt; 强制下次登录，提示用户改口令（常用）
+        passwd -f &lt;用户&gt; 强制操作
+
+批量改口令（多用于写程序时的命令）
+    echo 密码 | passwd --stdin 用户名（常用）
+
+chage命令（更改shadow）
+    选项：
+        chage &lt;用户&gt;    交互式更改指定用户密码策略
+        chage -l &lt;用户&gt; 查看指定用户密码策略
+        chage -d 0 &lt;用户&gt; 指定用户口令立即过期
+</code></pre><p><strong>关于用户组的创建和管理</strong></p>
+<pre><code>groupadd命令：用于创建组
+    选项：
+        groupadd -g &lt;gid&gt; &lt;groupname&gt; 创建指定id号的用户组
+            系统用户id默认设置
+            centos6&lt;500
+            centos7&lt;1000
+        groupadd -r &lt;groupname&gt; 创建指定系统用户组
+
+groupmod命令：用于修改组属性
+    选项：
+        groupmod -n &lt;new_name&gt; &lt;groupname&gt; 更改用户组名
+        groupmod -g &lt;new_id&gt; &lt;groupname&gt;   更改用户组id
+
+groupdel命令：用于删除组
+    groupdel &lt;groupname&gt;  删除用户组
+    选项：
+        groupdel -R
+    注意：主组不能删，附加组可以
+
+groupmems命令：用于更改和查看组成员
+选项：
+    groupmems -g &lt;group&gt;   更改为指定组(只有root)
+配合-g使用的参数：
+    groupmems -g &lt;group&gt; -a &lt;user&gt;  指定用户加入组
+    groupmems -g &lt;group&gt; -d &lt;user&gt;  从组中删除用户
+    groupmems -g &lt;group&gt; -p         从组中清除所有成员
+    groupmems -g &lt;group&gt; -l         显示组成员列表
+
+groups命令：用于查看组成员
+    groups[OPTION].[USERNAME]... 查看用户所属组列表
+</code></pre><p><strong>关于组密码</strong></p>
+<pre><code>gpasswd命令：用于更改组密码 
+    gpasswd &lt;group&gt; 更改组的密码
+    选项：
+        gpasswd -a &lt;用户&gt; &lt;组&gt; ，将用户添加至指定组中
+        gpasswd -d &lt;用户&gt; &lt;组&gt; ，从指定组中移除用户
+</code></pre><p><strong>查看用户相关的id信息以及切换用户</strong></p>
+<pre><code>id命令：用于判断用户的存在性
+    id &lt;用户&gt; 显示uid，gid，属组和附加组
+    uid=0(root) gid=0(root) groups=0(root)
+    选项：
+        id -n &lt;用户&gt; 显示名字
+        id -g &lt;用户&gt; 显示组id
+        id -u &lt;用户&gt; 显示uid
+        id -G &lt;用户&gt; 显示附加组id，全部组
+
+su命令（switch user）：用于切换账号，普通用户需要口令
+    su &lt;用户&gt; 切换用户，环境没变
+    su - &lt;用户&gt;  相当于重新登录，环境改变
+    su - &lt;用户&gt; -c &quot;command&quot; 切换用户，且执行命令后退出 
+    尽量不要多次切换
+</code></pre><p><strong>检查</strong></p>
+<pre><code>pwck 检查用户
+grpck 检查组
+</code></pre><h1 id="小结："><a href="#小结：" class="headerlink" title="小结："></a>小结：</h1><pre><code>给用户添加附加组的办法:
+
+    usermod -aG &lt;组&gt; &lt;用户&gt;
+    gpasswd -a &lt;用户&gt; &lt;组&gt;
+    groupmems -a &lt;用户&gt; -g &lt;组&gt;
+
+解锁：
+
+    usermod -L &lt;用户&gt; 单锁
+    usermod -U &lt;用户&gt; 解单锁
+    passwd -l &lt;用户&gt; 双重锁
+    passwd -u &lt;用户&gt; 解双重锁
+
+更变用户属组:
+
+    usermod -g &lt;组&gt; &lt;用户&gt;
+
+临时切换用户属组:
+
+    newgrp &lt;组&gt; 临时加入且更换主组
+
+更改附加组：
+
+    手动更改文件：
+        更改附加组时，group与gshadow最后一个字段必须一模一样
+    使用命令更改附加组
+    usermod -G &lt;组&gt; &lt;用户名&gt;       给用户添加附加组
+    groupmems -g &lt;组&gt; -a &lt;用户名&gt;  给用户添加附加组
+    gpasswd -a &lt;用户名&gt; &lt;组&gt;       给用户添加附加组
+
+newusers（作用待实验）
+
+chpasswd命令：更改密码，用法如下：用户名：密码
+
+    [root@Souler7 ~]# chpasswd 
+     xu:123456
+</code></pre><hr>
+<h1 id="文件权限：读read、写wirte、执行excute，简称rwx"><a href="#文件权限：读read、写wirte、执行excute，简称rwx" class="headerlink" title="文件权限：读read、写wirte、执行excute，简称rwx"></a>文件权限：读read、写wirte、执行excute，简称rwx</h1><p><strong>文件属性：</strong></p>
+<pre><code>eg:
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@Souler7 ~]<span class="comment"># ls -i xcb.log</span></span><br><span class="line">-rw-r--r-- 1 root root 100 Jul 18 15:08 xcb.log</span><br><span class="line"></span><br><span class="line">对应关系如下：</span><br><span class="line">-rw-r--r--   --&gt;权限</span><br><span class="line">1            --&gt;引用计数</span><br><span class="line">root         --&gt;所属组</span><br><span class="line">root         --&gt;所有者</span><br><span class="line">100          --&gt;文件大小</span><br><span class="line">Jul 18 15:08 --&gt;创建时间</span><br><span class="line">xcb.log      --&gt;文件名</span><br></pre></td></tr></table></figure>
+</code></pre><p><strong>权限管理：</strong></p>
+<pre><code>rwxrwxrwx：
+
+    左三位：定义user的权限
+    中三位：定义group的权限
+    右三位：定义other的权限
+
+进程安全上下文：
+
+    进程对文件的访问权限应用模型：
+        进程的属主与文件的属主是否相同，若果相同，则应用owner权限
+        否则，检查进程的属主是否属于文件的属组，如果是，则应用group权限
+        否则，就只能应用other权限
+
+权限：
+
+       r：readable 可读
+       w：writable 可写
+       x：excutable 可执行
+
+        文件权限： （一般情况下，普通文件不该拥有x权限）
+            r：可获取文件的数据
+            w：可修改文件的数据
+            x：可将此文件运行为进程
+
+        目录权限：
+            r：可以使用ls命令获取其下的所有文件列表
+            w：可修改此目录下的文件列表；创建或删除文件
+            x：可cd至目录中，且可使用ll来获取所有文件的详细属性信息
+
+        mode：rwxrwxrwx
+        ownership：user，group
+
+权限组合机制：
+
+        --- 000 0
+        --x 001 1
+        -w- 010 2
+        -wx 011 3
+        r-- 100 4
+        r-x 101 5
+        rw- 110 6
+        rwx 111 7
+
+权限管理命令：
+
+        chmod命令三种用法
+            chmod [OPTION]... MODE[,MODE]... FILE...
+            chmod [OPTION]... OCTAL-MODE FILE...
+            chmod [OPTION]... --reference=RFILE FILE...
+            三类用户：
+                u：所有者user
+                g：所属组group
+                o：其他人other
+                a：所有人
+            （1）chmod [OPTION]... MODE[,MODE]... FILE...
+                MODE表示法：
+                    赋权表示法：直接操作一类用户的所有权限位rwx
+                        u=
+                        g=
+                        o= 
+                        a=
+                    授权表示法：直接操作一类用户的一个权限位r,w,x
+                        u+,u-
+                        g+,g-
+                        o+,o-
+                        a+,a-      
+            （2）chmod [OPTION]... OCTAL-MODE FILE...
+                八进制表示法：
+                    eg：chmod 777 文件名    
+                777表示 rwxrwxrwx
+            （3）chmod [OPTION]... --reference=RFILE FILE...
+                引用表示法：
+             选项：
+             -R，递归修改
+
+从属关系管理命令：chown，chgrp
+
+        chown命令：
+            chown [OPTION]... [OWNER][:[GROUP]] FILE...
+               chown [OPTION]... --reference=RFILE FILE...
+               选项：
+                   -R 递归修改
+           chgrp命令：
+            chown [OPTION]... [OWNER][:[GROUP]] FILE...
+               chown [OPTION]... --reference=RFILE FILE...
+
+umask：文件的权限反向掩码，遮罩码
+
+           文件：rw-rw-rw-
+               666-umask 默认权限
+           目录：rwxrwxrwx
+               777-umask 默认权限
+        注意：之所以文件用666去减，是因为文件默认不得拥有执行权限，如果减得的结果中有执行权限，则需要将其加1
+               666-022=644
+               777-022=756
+
+           umask命令：
+               umask：查看当前umask
+               umask MASK:设置umask
+
+           注意：此类设定仅对当前shell进程有效 
+
+
+特殊权限：SUID、SGID、Stick
+
+         SUID 权限表示为：s
+             作用在可执行、二进制程序
+             当用户运行时继承此程序所有者的权限
+        SGID 权限表示为：s
+            文件：作用在可执行、二进制程序
+                继承此程序所属组的权限
+            文件夹：作用于目录上
+                当用户在目录新建文件时继承目录所属组
+        Sticky 权限表示为：t
+            作用于目录上，目录中的文件只能被所有者删除
+
+限制root权限
+
+    chattr命令
+        chattr +i 加锁，禁止删除,改名，更改
+      chattr -i 解除+i
+      chattr +a 可追加内容，不可删除
+      chattr -a 解除 +a
+      chattr +A 禁用读时间的功能
+      chattr -A 解除 -A
+      lsattr      查看特殊属性
+
+访问控制列表：ACL，自定义权限
+
+    setfacl命令
+        setfacl -m u：wang：rw f1 自定义用户权限
+        setfacl -m g：wang：rw wang 自定义组权限
+        getfacl 文件 查看文件的acl权限
+        setfacl -x wang f1 删除文件中用户wang的acl权限
+        setfacl -b     清除文件中所有acl权限
+
+        setfacl -R  目录  递归acl
+        setfacl -M  调用文本，批量创建权限
+        setfacl -X  调用文本批量删除权限
+        --set选项(待补充)
+    mask限高杆
+        setfacl -m mask::r f1 文件中的acl权限最高只有r--
+        setfacl -m mask:rw f1 文件中的acl权限最高只有rw-
+
+    注意：在设定了acl自定义权限之后
+        chmod g= file 修改的是mask的权限，而不是group权限
+
+    acl生效顺序：所有者、自定义用户、自定义组、其他人
+
+     FAT分区不支持设置权限
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/07/29/第二周-用户和组的管理以及权限管理/" data-id="cjk6tl6080002awisffe0zo6n" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/07/26/第二周-命令、索引节点、标准IO和管道/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">命令、索引节点、标准I/O和管道</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/07/29/第二周-用户和组的管理以及权限管理/">用户和组的管理以及权限管理</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/26/第二周-命令、索引节点、标准IO和管道/">命令、索引节点、标准I/O和管道</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/25/第二周-关于文件系统，以及history、cd、ls、touch、cp命令/">关于文件系统，以及history、cd、ls、touch、cp命令以及通配符</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/22/个人blog搭建（纯属笔记，不做任何解释）/">个人blog搭建（纯属笔记，不做任何解释）</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/21/第一周-计算机基础知识/">计算机基础知识</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 ACan<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

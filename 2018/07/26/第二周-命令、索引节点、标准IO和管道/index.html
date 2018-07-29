@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>命令、索引节点、标准I/O和管道 | Souler ACan’s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="DAY 4 内容概括：个人梳理命令、索引节点、标准I/O和管道相关知识 命令mv        单个文件重命名与移动 rename    多个文件重命名 rm        删除 shred     覆盖式删除 tree      目录树 dd        创建指定大小的文件 mkdir     创建空目录 redir     删除空目录 file      判断文件类型 tr        标">
+<meta property="og:type" content="article">
+<meta property="og:title" content="命令、索引节点、标准I&#x2F;O和管道">
+<meta property="og:url" content="http://yoursite.com/2018/07/26/第二周-命令、索引节点、标准IO和管道/index.html">
+<meta property="og:site_name" content="Souler ACan’s blog">
+<meta property="og:description" content="DAY 4 内容概括：个人梳理命令、索引节点、标准I/O和管道相关知识 命令mv        单个文件重命名与移动 rename    多个文件重命名 rm        删除 shred     覆盖式删除 tree      目录树 dd        创建指定大小的文件 mkdir     创建空目录 redir     删除空目录 file      判断文件类型 tr        标">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-07-26T12:42:58.246Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="命令、索引节点、标准I&#x2F;O和管道">
+<meta name="twitter:description" content="DAY 4 内容概括：个人梳理命令、索引节点、标准I/O和管道相关知识 命令mv        单个文件重命名与移动 rename    多个文件重命名 rm        删除 shred     覆盖式删除 tree      目录树 dd        创建指定大小的文件 mkdir     创建空目录 redir     删除空目录 file      判断文件类型 tr        标">
+  
+    <link rel="alternate" href="/atom.xml" title="Souler ACan’s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Souler ACan’s blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">who am i ？</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-第二周-命令、索引节点、标准IO和管道" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/07/26/第二周-命令、索引节点、标准IO和管道/" class="article-date">
+  <time datetime="2018-07-26T12:00:00.000Z" itemprop="datePublished">2018-07-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      命令、索引节点、标准I/O和管道
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="DAY-4"><a href="#DAY-4" class="headerlink" title="DAY 4"></a>DAY 4</h1><hr>
+<p><strong>内容概括：个人梳理命令、索引节点、标准I/O和管道相关知识</strong></p>
+<h1 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h1><pre><code>mv        单个文件重命名与移动
+rename    多个文件重命名
+rm        删除
+shred     覆盖式删除
+tree      目录树
+dd        创建指定大小的文件
+mkdir     创建空目录
+redir     删除空目录
+file      判断文件类型
+tr        标准输入和标准输出
+tee       配合管道使用
+|         管道
+</code></pre><h1 id="索引节点"><a href="#索引节点" class="headerlink" title="索引节点"></a>索引节点</h1><pre><code>inode（index node）
+硬链
+软链接
+关于磁盘存储内部工作原理
+inode 表结构的直接指针与间接指针
+</code></pre><h1 id="标准I-O和管道"><a href="#标准I-O和管道" class="headerlink" title="标准I/O和管道"></a>标准I/O和管道</h1><pre><code>关于重定向的语法…
+多行STDIN&quot;&lt;&lt;终止词&quot;
+</code></pre><hr>
+<h1 id="命令-1"><a href="#命令-1" class="headerlink" title="命令"></a>命令</h1><h2 id="mv命令"><a href="#mv命令" class="headerlink" title="mv命令"></a>mv命令</h2><p>mv &lt;选项&gt; &lt;文件名&gt; &lt;文件名&gt;<br>用于移动覆盖文件或者给文件改名 （仅能单个改名）<br>常用选项：<br>-i 覆盖前询问<br>-f 强制覆盖</p>
+<p>eg：改名<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@Souler6 app]<span class="comment"># ls</span></span><br><span class="line">dir1 f1 f2 f3 f4</span><br><span class="line">[root@Souler6 app]<span class="comment"># mv f2 f5 #将f2改名为f5</span></span><br><span class="line">[root@Souler6 app]<span class="comment"># ls</span></span><br><span class="line">dir1 f1 f3 f4 f5</span><br></pre></td></tr></table></figure></p>
+<p>eg：移动且改名<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@Souler6 app]<span class="comment"># ll</span></span><br><span class="line">total 4</span><br><span class="line">-rw-r–r–. 2 root root 0 Jul 26 09:35 f5 <span class="comment">#注意创建时间</span></span><br><span class="line">[root@Souler6 app]<span class="comment"># ll dir1/</span></span><br><span class="line">total 0</span><br><span class="line">-rw-r–r–. 1 root root 0 Jul 26 10:54 f4</span><br><span class="line">-rw-r–r–. 1 root root 0 Jul 26 10:54 f5</span><br><span class="line">[root@Souler6 app]<span class="comment"># mv f5 dir1/f6 #移动并改名</span></span><br><span class="line">[root@Souler6 app]<span class="comment"># ll dir1/</span></span><br><span class="line">total 0</span><br><span class="line">-rw-r–r–. 1 root root 0 Jul 26 10:54 f4</span><br><span class="line">-rw-r–r–. 1 root root 0 Jul 26 10:54 f5</span><br><span class="line">-rw-r–r–. 2 root root 0 Jul 26 09:35 f6 <span class="comment">#f5移动且改名的文件f6，创建时间与f5相同</span></span><br></pre></td></tr></table></figure></p>
+<p>eg：移动改名且覆盖<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@Souler6 app]<span class="comment"># touch f5</span></span><br><span class="line">[root@Souler6 app]<span class="comment"># ll</span></span><br><span class="line">total 4</span><br><span class="line">-rw-r–r–. 1 root root 0 Jul 26 11:03 f5 <span class="comment">#注意创建时间</span></span><br><span class="line">[root@Souler6 app]<span class="comment"># ll dir1/</span></span><br><span class="line">total 0</span><br><span class="line">-rw-r–r–. 2 root root 0 Jul 26 09:35 f6 <span class="comment">#注意创建时间</span></span><br><span class="line">[root@Souler6 app]<span class="comment"># mv f5 dir1/f6</span></span><br><span class="line">mv: overwrite `dir1/f6’? y <span class="comment">##文件已存在询问是否覆盖，加-f 可以强制覆盖</span></span><br><span class="line">[root@Souler6 app]<span class="comment"># ll dir1/</span></span><br><span class="line">total 0</span><br><span class="line">-rw-r–r–. 1 root root 0 Jul 26 11:03 f6 <span class="comment">#改名且覆盖后，时间也变了</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="rename命令"><a href="#rename命令" class="headerlink" title="rename命令"></a>rename命令</h2><p>批量改名字<br>eg：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@Souler6 dir1]<span class="comment"># ll</span></span><br><span class="line">total 0</span><br><span class="line">-rw-r–r–. 1 root root 0 Jul 26 10:54 f1</span><br><span class="line">-rw-r–r–. 1 root root 0 Jul 26 10:54 f2</span><br><span class="line">-rw-r–r–. 1 root root 0 Jul 26 10:54 f3</span><br><span class="line">-rw-r–r–. 1 root root 0 Jul 26 10:54 f4</span><br><span class="line">-rw-r–r–. 1 root root 0 Jul 26 10:54 f5</span><br><span class="line">-rw-r–r–. 1 root root 0 Jul 26 11:03 f6</span><br><span class="line">[root@Souler6 dir1]<span class="comment"># rename ‘f’ ‘xcb’ f*</span></span><br><span class="line">[root@Souler6 dir1]<span class="comment"># ll</span></span><br><span class="line">total 0</span><br><span class="line">-rw-r–r–. 1 root root 0 Jul 26 10:54 xcb1</span><br><span class="line">-rw-r–r–. 1 root root 0 Jul 26 10:54 xcb2</span><br><span class="line">-rw-r–r–. 1 root root 0 Jul 26 10:54 xcb3</span><br><span class="line">-rw-r–r–. 1 root root 0 Jul 26 10:54 xcb4</span><br><span class="line">-rw-r–r–. 1 root root 0 Jul 26 10:54 xcb5</span><br><span class="line">-rw-r–r–. 1 root root 0 Jul 26 11:03 xcb6</span><br></pre></td></tr></table></figure></p>
+<h2 id="rm命令-可还原的删除"><a href="#rm命令-可还原的删除" class="headerlink" title="rm命令 可还原的删除"></a>rm命令 可还原的删除</h2><p>rm &lt;选项&gt;&lt;文件名&gt;..<br>常用选项：<br>-i 交互式，删除前询问<br>-f 强制性，不询问</p>
+<p>eg：交互式删除<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@Souler6 dir1]<span class="comment"># ll</span></span><br><span class="line">total 0</span><br><span class="line">-rw-r–r–. 1 root root 0 Jul 26 10:54 xcb1</span><br><span class="line">-rw-r–r–. 1 root root 0 Jul 26 10:54 xcb2</span><br><span class="line">-rw-r–r–. 1 root root 0 Jul 26 10:54 xcb3</span><br><span class="line">-rw-r–r–. 1 root root 0 Jul 26 10:54 xcb4</span><br><span class="line">-rw-r–r–. 1 root root 0 Jul 26 10:54 xcb5</span><br><span class="line">-rw-r–r–. 1 root root 0 Jul 26 11:03 xcb6</span><br><span class="line">[root@Souler6 dir1]<span class="comment"># rm xcb1 xcb2 xcb3</span></span><br><span class="line">rm: remove regular empty file xcb1? y </span><br><span class="line">rm: remove regular empty file xcb2? y</span><br><span class="line">rm: remove regular empty file xcb3? y</span><br><span class="line">[root@Souler6 dir1]<span class="comment"># ll</span></span><br><span class="line">total 0</span><br><span class="line">-rw-r–r–. 1 root root 0 Jul 26 10:54 xcb4</span><br><span class="line">-rw-r–r–. 1 root root 0 Jul 26 10:54 xcb5</span><br><span class="line">-rw-r–r–. 1 root root 0 Jul 26 11:03 xcb6</span><br></pre></td></tr></table></figure></p>
+<p>eg：强制删除<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@Souler6 dir1]<span class="comment"># ll</span></span><br><span class="line">total 0</span><br><span class="line">-rw-r–r–. 1 root root 0 Jul 26 10:54 xcb4</span><br><span class="line">-rw-r–r–. 1 root root 0 Jul 26 10:54 xcb5</span><br><span class="line">-rw-r–r–. 1 root root 0 Jul 26 11:03 xcb6</span><br><span class="line">[root@Souler6 dir1]<span class="comment"># rm -f xcb4</span></span><br><span class="line">[root@Souler6 dir1]<span class="comment"># ll</span></span><br><span class="line">total 0</span><br><span class="line">-rw-r–r–. 1 root root 0 Jul 26 10:54 xcb5</span><br><span class="line">-rw-r–r–. 1 root root 0 Jul 26 11:03 xcb6</span><br></pre></td></tr></table></figure></p>
+<p>eg：删除目录 需要-r递归删除<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@Souler6 app]<span class="comment"># ll</span></span><br><span class="line">total 4</span><br><span class="line">drwxr-xr-x. 2 root root 4096 Jul 26 11:15 dir1</span><br><span class="line">-rw-r–r–. 1 root root 0 Jul 26 09:35 f1</span><br><span class="line">lrwxrwxrwx. 1 root root 7 Jul 26 09:37 f3 -&gt; /app/f1</span><br><span class="line">lrwxrwxrwx. 1 root root 9 Jul 26 09:39 f4 -&gt; ../app/f1</span><br><span class="line">-rw-r–r–. 1 root root 0 Jul 26 11:01 f6</span><br><span class="line">[root@Souler6 app]<span class="comment"># ll dir1/</span></span><br><span class="line">total 0</span><br><span class="line">-rw-r–r–. 1 root root 0 Jul 26 10:54 xcb5</span><br><span class="line">-rw-r–r–. 1 root root 0 Jul 26 11:03 xcb6</span><br><span class="line">[root@Souler6 app]<span class="comment"># rm -rf dir1/</span></span><br><span class="line">[root@Souler6 app]<span class="comment"># ll</span></span><br><span class="line">total 0</span><br><span class="line">-rw-r–r–. 1 root root 0 Jul 26 09:35 f1</span><br><span class="line">lrwxrwxrwx. 1 root root 7 Jul 26 09:37 f3 -&gt; /app/f1</span><br><span class="line">lrwxrwxrwx. 1 root root 9 Jul 26 09:39 f4 -&gt; ../app/f1</span><br><span class="line">-rw-r–r–. 1 root root 0 Jul 26 11:01 ll f6</span><br></pre></td></tr></table></figure></p>
+<p>利用alias命令与mv，创建一个垃圾箱trash<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">alias</span> rm=<span class="string">"mv -t /trash"</span>  <span class="comment">#利用-t选项 调换前后顺序</span></span><br></pre></td></tr></table></figure></p>
+<p>创建一个名为bigfile，大小为100M的文件。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ dd <span class="keyword">if</span>=/dev/zero of=bigfile bs=1M count=100</span><br></pre></td></tr></table></figure></p>
+<p>删除大文件，急速为系统腾出空间，使用重定向原理&gt;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ &gt; bigfile</span><br><span class="line">$ rm -rf bigfile</span><br></pre></td></tr></table></figure></p>
+<p>未知命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lsof | grep deleted</span><br></pre></td></tr></table></figure></p>
+<p>提问：删除文件的底层原理?</p>
+<h2 id="shred命令-相对比较安全的删除"><a href="#shred命令-相对比较安全的删除" class="headerlink" title="shred命令 相对比较安全的删除"></a>shred命令 相对比较安全的删除</h2><p>shred -zv -n5 &lt;文件名&gt;</p>
+<h2 id="tree命令"><a href="#tree命令" class="headerlink" title="tree命令"></a>tree命令</h2><p>tree &lt;选项&gt;&lt;目录名&gt;</p>
+<pre><code>查看目录的树
+tree -d 只看目录树
+tree -L n 查看层数，n为层数
+tree -P 配合通配符使用*
+</code></pre><h2 id="dd命令"><a href="#dd命令" class="headerlink" title="dd命令"></a>dd命令</h2><pre><code>$ dd if=/dev/zero of=bigfile bs=1M count=100
+创建一个名为bigfile，大小为100M的文件。
+</code></pre><h2 id="mkdir命令"><a href="#mkdir命令" class="headerlink" title="mkdir命令"></a>mkdir命令</h2><p>mkdir -p 自动创建不存在的子目录<br>创建空目录<br>eg：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@Souler6 ~]<span class="comment"># mkdir /app/dir1/&#123;x/&#123;a,b&#125;,y/&#123;c,d&#125;&#125;</span></span><br><span class="line">mkdir: cannot create directory /app/dir1/x/a: No such file or directory mkdir: cannot create directory/app/dir1/x/b’: No such file or directory</span><br><span class="line">mkdir: cannot create directory /app/dir1/y/c: No such file or directory mkdir: cannot create directory/app/dir1/y/d’: No such file or directory</span><br><span class="line"><span class="comment">#报错原因，因为没加-p选项，不会自动创建不存在的子目录，我们可以尝试加参数后在运行</span></span><br><span class="line">[root@Souler6 ~]<span class="comment"># mkdir -pv /app/dir1/&#123;x/&#123;a,b&#125;,y/&#123;c,d&#125;&#125;</span></span><br><span class="line">mkdir: created directory /app/dir1 mkdir: created directory/app/dir1/x</span><br><span class="line">mkdir: created directory /app/dir1/x/a mkdir: created directory/app/dir1/x/b</span><br><span class="line">mkdir: created directory /app/dir1/y mkdir: created directory/app/dir1/y/c</span><br><span class="line">mkdir: created directory /app/dir1/y/d</span><br><span class="line"><span class="comment">#加了-p选项就创建成功了，-v是显示创建过程</span></span><br></pre></td></tr></table></figure></p>
+<pre><code>[root@Souler6 ~]# tree /app/dir1/
+/app/dir1/
+├── x
+│   ├── a
+│   └── b
+└── y
+    ├── c
+    └── d
+
+6 directories, 0 files
+</code></pre><p>用目录树显示，想使用tree需自己安装。。</p>
+<h2 id="rmdir命令"><a href="#rmdir命令" class="headerlink" title="rmdir命令"></a>rmdir命令</h2><p>rmdir -p 自动删除上一级空目录<br>只能删空目录<br>eg：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@Souler6 app]<span class="comment"># mkdir -pv /app/dir1/dir2/&#123;/dir3,/dir4/dir5/dir6&#125;</span></span><br><span class="line">mkdir: created directory /app/dir1 mkdir: created directory/app/dir1/dir2</span><br><span class="line">mkdir: created directory /app/dir1/dir2//dir3 mkdir: created directory/app/dir1/dir2//dir4</span><br><span class="line">mkdir: created directory /app/dir1/dir2//dir4/dir5 mkdir: created directory/app/dir1/dir2//dir4/dir5/dir6</span><br></pre></td></tr></table></figure></p>
+<pre><code>[root@Souler6 app]# tree /app/
+/app/
+└── dir1
+└── dir2
+    ├── dir3
+    └── dir4 有树目录可看出，dir2非空目录
+        └── dir5
+            └── dir6
+        6 directories, 0 files
+</code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@Souler6 app]<span class="comment"># rmdir -pv /app/dir1/dir2/dir4/dir5/dir6/</span></span><br><span class="line">rmdir: removing directory, /app/dir1/dir2/dir4/dir5/dir6/ rmdir: removing directory,/app/dir1/dir2/dir4/dir5</span><br><span class="line">rmdir: removing directory, /app/dir1/dir2/dir4 rmdir: removing directory,/app/dir1/dir2</span><br><span class="line">rmdir: failed to remove directory /app/dir1/dir2: Directory not empty <span class="comment">#删到过程能够看到报错了，由于目录dir2非空目录，停止删除</span></span><br></pre></td></tr></table></figure>
+<pre><code>[root@Souler6 app]# tree /app/
+/app/
+└── dir1
+    └── dir2
+        └── dir3 #对比上面的树目录中可以看到dir2目录下空的子目录已被清理
+3 directories, 0 files
+</code></pre><p>故，可印证rmdir只能删空目录，-p是将父目录为空的目录删除，逆向递归删除</p>
+<h1 id="索引节点-1"><a href="#索引节点-1" class="headerlink" title="索引节点"></a>索引节点</h1><p>linux底层工作原理</p>
+<h2 id="inode（index-node）"><a href="#inode（index-node）" class="headerlink" title="inode（index node）"></a>inode（index node）</h2><p>节点编号简介</p>
+<pre><code>inode number ,inode编号，是每个文件的唯一性，
+inode table 节点表 属于元数据
+节点编号，链接数（matadata）
+date block 数据块 属于数据
+1M、1G (data)
+</code></pre><p>即时节点编号也有可能出现出现节点编号相同的情况<br>eg:</p>
+<pre><code>分区所在挂载的目录节点编号相同
+在同一个分区中，节点编号相同即为同一个文件（涉及硬链接）
+</code></pre><p>在不同分区中，即时节点编号相同也不是同一文件，每个分区中的节点编号不互通（分区挂载点除外）<br>节点编号是有限的，可回收利用<br>eg:</p>
+<pre><code>f1的节点编号为52，删除f1后又创建f2的节点编号为52
+原因：由于f1被删除后，节点编号52空缺，之后会被分配给新创建的文件f2使用
+</code></pre><p>查看节点编号</p>
+<pre><code>$ls -l -i
+</code></pre><p>查看节点编号的使用情况</p>
+<pre><code>$ df -i
+</code></pre><h2 id="硬链接"><a href="#硬链接" class="headerlink" title="硬链接"></a>硬链接</h2><p>独立，只能在同一个分区，不能跨设备，不能跨分区，局限性。<br>且多个硬链接文件所占的空间=单个源文件。可以理解为每一个硬链接都是给文件起了个新名字，所占用的资源不增加不减少。<br>文件夹不支持创建硬链接，节点编号不增长。</p>
+<p>eg：</p>
+<pre><code>[root@Souler6 ~]# touch /app/f1
+[root@Souler6 ~]# ll -i /app/
+total 0
+11 -rw-r–r–. 1 root root 0 Jul 26 09:35 f1 ##11是节点编号，2是硬链接
+[root@Souler6 ~]# ln /app/f1 /app/f2
+[root@Souler6 ~]# ll -i /app/
+total 0
+11 -rw-r–r–. 2 root root 145 Jul 26 09:35 f1
+11 -rw-r–r–. 2 root root 145 Jul 26 09:35 f2
+#从上面的信息可以获取到 f1与f2是硬链接的关系，其节点编号相同，都为11，这两个文件是等同的，且所占空间为145个字节，而不是290个字节。
+#将f1删除，f2可以运行，不受影响。
+#将f2删除，f1可以运行，不受影响。
+#可以理解为，删除硬链接仅仅是将文件多个名字中去掉一个名字
+#但若是将f1，f2同时删除，此文件将不存在，且节点编号空缺出来，等待分配给新的文件
+</code></pre><p>创建硬链接</p>
+<pre><code>$ ln f1 f2
+</code></pre><h2 id="软链接"><a href="#软链接" class="headerlink" title="软链接"></a>软链接</h2><p>仅仅只是一个快捷方式，每个软链接会占用一个节点编号，每个快捷方式所占空间与路径有关<br>可跨分区，依赖性：假如源文件被删除，则软链接失效。</p>
+<p>同分区使用：</p>
+<pre><code>[root@Souler6 ~]# ln -s /app/f1 /app/f3 （使用绝对路径）
+[root@Souler6 ~]# ln -s ../app/f1 /app/f4 （使用相对路径）
+[root@Souler6 ~]# ll -i /app/
+total 0
+11 -rw-r–r–. 2 root root 145 Jul 26 09:35 f1
+11 -rw-r–r–. 2 root root 145 Jul 26 09:35 f2
+12 lrwxrwxrwx. 1 root root 7 Jul 26 09:37 f3 -&gt; /app/f1
+13 lrwxrwxrwx. 1 root root 9 Jul 26 09:39 f4 -&gt; ../app/f1
+
+f3与f4都是f1的软链接，相当于f1的快捷方式，即时这样也不是同一个文件，可以看到f3与f4的节点编号不同，各自占用一个独立的节点编号。
+以及可以看到f3指向的路径有7个字符占用7个字节，f4指向的路径有9个字符占用了9个字节，因此可以得出每个快捷方式所占空间与源文件无关，而是与路径的字符长度有关。
+</code></pre><p>跨分区使用</p>
+<pre><code>[root@Souler6 ~]# ln -s ../app/f1 f4
+[root@Souler6 ~]# ll -i /root/
+total 104
+134418 -rw——-. 1 root root 1456 Jul 17 11:08 anaconda-ks.cfg
+153481 drwxr-xr-x. 2 root root 4096 Jul 26 08:57 Desktop
+153485 drwxr-xr-x. 2 root root 4096 Jul 17 11:18 Documents
+153482 drwxr-xr-x. 2 root root 4096 Jul 17 11:18 Downloads
+153603 -rw-r–r–. 1 root root 0 Jul 26 09:34 f1
+153615 lrwxrwxrwx. 1 root root 9 Jul 26 09:38 f4 -&gt; ../app/f1
+
+可以看到快捷方式f4使用的节点编号，跟上面的f4是不一样的，差别很大
+跨区创建所生成的软链接会按当前分区剩余的节点编号去分配节点。
+可以看到/分区下 快捷方式f4的节点编号为153615
+而分区/app下，快捷方式f4的节点编号为13。
+
+多用相对路径，每个软链接独自分配一个不同的节点编号
+</code></pre><p>/dev/cdrom-&gt; sr0 光盘的快捷方式<br>创建软链接</p>
+<pre><code>ln -s f1 f2，
+</code></pre><p>多用相对路径</p>
+<h2 id="分析-mv-f1-f2-与-ln-s-f1-f2-的底层原理"><a href="#分析-mv-f1-f2-与-ln-s-f1-f2-的底层原理" class="headerlink" title="分析 mv f1 f2 与 ln -s f1 f2 的底层原理"></a>分析 mv f1 f2 与 ln -s f1 f2 的底层原理</h2><p><strong>mv f1 f2</strong><br>同分区中，改名，或者移动，并不会改变节点编号<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">[root@Souler6 mv]<span class="comment"># ll -i</span></span><br><span class="line">total 0</span><br><span class="line">131074 -rw-r–r–. 1 root root 0 Jul 26 12:25 f1 <span class="comment">#改名前</span></span><br><span class="line">[root@Souler6 mv]<span class="comment"># mv f1 ../f2 #移动f1并改名为f2</span></span><br><span class="line">[root@Souler6 mv]<span class="comment"># ll -i</span></span><br><span class="line">total 0</span><br><span class="line">[root@Souler6 mv]<span class="comment"># ll -i ../</span></span><br><span class="line">total 8</span><br><span class="line">131074 -rw-r–r–. 1 root root 0 Jul 26 12:25 f2 <span class="comment">#改名后，文件数据没任何变化</span></span><br><span class="line">524289 drwxr-xr-x. 2 root root 4096 Jul 26 12:27 ln</span><br><span class="line">131073 drwxr-xr-x. 2 root root 4096 Jul 26 12:29 mv</span><br><span class="line">同分区中，改名且覆盖</span><br><span class="line">[root@Souler6 mv]<span class="comment"># touch f22 #创建一个新的文件f22</span></span><br><span class="line">[root@Souler6 mv]<span class="comment"># ll -i</span></span><br><span class="line">total 0</span><br><span class="line">131075 -rw-r–r–. 1 root root 0 Jul 26 12:31 f22 <span class="comment">#f22节点编号131075</span></span><br><span class="line">[root@Souler6 mv]<span class="comment"># ll -i ../</span></span><br><span class="line">total 8</span><br><span class="line">131074 -rw-r–r–. 1 root root 0 Jul 26 12:25 f2 <span class="comment">#f2节点编号为131074</span></span><br><span class="line">524289 drwxr-xr-x. 2 root root 4096 Jul 26 12:27 ln</span><br><span class="line">131073 drwxr-xr-x. 2 root root 4096 Jul 26 12:31 mv</span><br><span class="line">[root@Souler6 mv]<span class="comment"># mv f22 ../f2</span></span><br><span class="line">mv: overwrite `../f2’? y <span class="comment">#因已存在f2文件，故改名后覆盖</span></span><br><span class="line">[root@Souler6 mv]<span class="comment"># ll -i ../</span></span><br><span class="line">total 8</span><br><span class="line">131075 -rw-r–r–. 1 root root 0 Jul 26 12:31 f2 <span class="comment">#f2节点编号为131075，变了</span></span><br><span class="line">524289 drwxr-xr-x. 2 root root 4096 Jul 26 12:27 ln</span><br><span class="line">131073 drwxr-xr-x. 2 root root 4096 Jul 26 12:31 mv</span><br><span class="line">跨分区移动</span><br><span class="line">[root@Souler6 ~]<span class="comment"># ll -i f1</span></span><br><span class="line">153603 -rw-r–r–. 1 root root 0 Jul 26 09:34 f1</span><br><span class="line">[root@Souler6 ~]<span class="comment"># mv f1 /boot</span></span><br><span class="line">[root@Souler6 ~]<span class="comment"># ll -i /boot/f1</span></span><br><span class="line">38 -rw-r–r–. 1 root root 0 Jul 26 09:34 /boot/f1 <span class="comment">#注意，节点编号改变了</span></span><br></pre></td></tr></table></figure></p>
+<p>根据以上分析可以得出<br>同分区中<br>mv改名后，文件数据没任何变化<br>mv移动文件时，节点编号不会发生改变<br>mv覆盖文件时，会把节点编号一起覆盖掉<br>跨分区的移动<br>mv移动后，节点编号会发生改变</p>
+<p><strong>ln -s f1 f2</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@Souler6 mv]<span class="comment"># ll -i ../ln/</span></span><br><span class="line">total 0</span><br><span class="line">524290 -rw-r–r–. 1 root root 0 Jul 26 12:45 f1 <span class="comment">#源文件的节点编号为524290</span></span><br><span class="line">[root@Souler6 mv]<span class="comment"># ln -s ../../app/ln/f1 /app/mv/f3 #可以理解成将相对路径下f1文件的快捷方式发送到绝对路径并起名为f3</span></span><br><span class="line">[root@Souler6 mv]<span class="comment"># ll -i ../mv/</span></span><br><span class="line">total 0</span><br><span class="line">131076 lrwxrwxrwx. 1 root root 10 Jul 26 13:01 f3 -&gt; ../../app/ln/f1<span class="comment">#快捷方式的节点为131076</span></span><br><span class="line"></span><br><span class="line">[root@Souler6 mv]<span class="comment"># tree /app/</span></span><br><span class="line">/app/</span><br><span class="line">├── f2</span><br><span class="line">├── ln</span><br><span class="line">│   └── f1</span><br><span class="line">└── mv</span><br><span class="line">    └── f3 -&gt; /app/ln/f1</span><br><span class="line">2 directories, 3 files</span><br></pre></td></tr></table></figure></p>
+<p>根据以上分析可以得出，<br>创建快捷方式需指定相对路径，再指定存放的绝对路径<br>快捷方式也会被单独分配一个节点，且所占大小与路径字符有关<br>创建同分区中和跨分区的软链接<br>ln -s 软链接都会被分配一个新的节点编号</p>
+<p><strong>xargs touch 突破创建文件个数的限制</strong></p>
+<pre><code>[root@Souler6 ~]# echo f{1..100000} | xargs touch
+</code></pre><p>##inode 表结构的直接指针与间接指针<br>直接指针</p>
+<pre><code>12共有个直接指针，每个指针指向一个大小为4k的数据块，最多存储48k，但存储的数据超过48k则需要用到间接指针来存储更大的数据
+</code></pre><p>间接指针</p>
+<pre><code>一个间接指针占4个字节byte
+一个数据块占4k，4k=41024byte
+所以1个数据块中有1024个间接指针
+</code></pre><p>一级间接指针 4MB</p>
+<pre><code>间接指针指向下一个文件块的指针，文件块的大小为4k，每个指针占4个byte，故可以理解为该文件块下有1024个指针，1024个指针分别指向1024个4k的数据块，故可存放文件的大小为10244k=4MB
+</code></pre><p>二级间接指针 4GB</p>
+<pre><code>间接指针指向下一个文件块的指针，文件块的大小为4k，每个指针占4个byte，故可以理解为该文件块下有1024个指针，1024个指针分别指向1024个文件块，这种又衍生除了10241024个指针，这10241024个指针再次指向数据块，每个数据块大小为4k，故可存放的文件大小为102410244k=4GB
+</code></pre><p>三级间接指针 4TB</p>
+<pre><code>与二级指针同理，故可存放的文件大小为102410241024*4k=4TB
+</code></pre><p><strong>file命令</strong><br>在linux中，不注重后缀，一般情况下更改后缀不影响程序的运行<br>file [选项] &lt;文件名&gt;</p>
+<p>也可以通过hexdump查看开头作出判断</p>
+<pre><code>hexdump -C -n 100 &lt;文件名&gt;
+</code></pre><h2 id="标准I-O"><a href="#标准I-O" class="headerlink" title="标准I/O"></a>标准I/O</h2><p>input：输入数据 ouput：输出数据<br>文件描述符</p>
+<pre><code>打开的文件都有一个fd：file descriptor(文件描述符)
+进程运行会产生文件描述符
+自动生成的文件描述符存储在/proc/PID/fd中，PID是一个数字（进程编号）
+</code></pre><p>查看进程</p>
+<pre><code>$ ps aux
+</code></pre><p>linux中给程序提供的三种I/O设备</p>
+<pre><code>标准输入 STDIN 0 默认位置：键盘
+标准输出 STDOUT 1 默认位置：当前终端窗口
+标准错误 STDERR 2 默认位置：当前终端窗口
+</code></pre><p><strong>I/O重定向：改变默认位置</strong></p>
+<p>把输出和错误重定向到文件</p>
+<p>大致讲一下标准输入、标准输出、标准错误的概念<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@Souler6 app]<span class="comment"># ll /app/ /error/ # 一般我们在键盘中敲入命令，这就是标准输入STDIN（0）</span></span><br><span class="line">ls: cannot access /error/: No such file or directory <span class="comment"># 执行命令后由于/error文件不存在，故，报错，这种就是标准错误STDERR（2）标准错误会默认打印在当前终端窗口</span></span><br><span class="line">/app/: <span class="comment">#/app存在，故，这是一个标准输出STDOUT（1）标准输出会默认打印在当前终端窗口</span></span><br><span class="line">total 12</span><br><span class="line">drwxr-xr-x. 2 root root 4096 Jul 26 10:12 d1</span><br><span class="line">drwxr-xr-x. 2 root root 4096 Jul 26 10:12 d2</span><br></pre></td></tr></table></figure></p>
+<p>下面举例子详细说明： ‘&gt;’可以用于重定向, ‘&gt;&gt;’ 用于重定向的追加<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">[root@Souler6 app]<span class="comment"># ls</span></span><br><span class="line">d1 d2</span><br><span class="line">[root@Souler6 app]<span class="comment"># ll /app/ /error/ &gt; 1.txt #标准输入，但是’&gt;’已经将标准输出进行了重定向，故屏幕不打印标准输出，只打印了标准错误</span></span><br><span class="line">ls: cannot access /error/: No such file or directory</span><br><span class="line">[root@Souler6 app]<span class="comment"># cat 1.txt # 查看1.txt中是不是真的打印了标准输出</span></span><br><span class="line">/app/: <span class="comment">#这是本来应该被打印在屏幕上的标准输出，但’&gt;’对其进行了重定向</span></span><br><span class="line">total 8</span><br><span class="line">-rw-r–r–. 1 root root 0 Jul 26 10:33 1.txt <span class="comment">#这是创建用于存放标准输出的文件，因为ll在打印前就对1.txt进行了列出命令，初始大小为0，实际上它的大小已经不是0了，我们可以理解为是 ‘ll命令的速度’比‘重定向打印的速度快’。</span></span><br><span class="line">drwxr-xr-x. 2 root root 4096 Jul 26 10:32 d1</span><br><span class="line">drwxr-xr-x. 2 root root 4096 Jul 26 10:32 d2</span><br><span class="line">[root@Souler6 app]<span class="comment"># ll #查看1.txt的大小</span></span><br><span class="line">total 12</span><br><span class="line">-rw-r–r–. 1 root root 153 Jul 26 10:33 1.txt <span class="comment">#可以看到占用了153个字节</span></span><br><span class="line">drwxr-xr-x. 2 root root 4096 Jul 26 10:32 d1</span><br><span class="line">drwxr-xr-x. 2 root root 4096 Jul 26 10:32 d2</span><br><span class="line">[root@Souler6 app]<span class="comment"># ll /app/ /error/ &gt;&gt; 1.txt #使用’&gt;&gt;’表示追加打印，不加则会覆盖</span></span><br><span class="line">ls: cannot access /error/: No such file or directory</span><br><span class="line">[root@Souler6 app]<span class="comment"># cat 1.txt # 可以看到标准输出追加到了原有内容的下边</span></span><br><span class="line">/app/:</span><br><span class="line">total 8</span><br><span class="line">-rw-r–r–. 1 root root 0 Jul 26 10:33 1.txt</span><br><span class="line">drwxr-xr-x. 2 root root 4096 Jul 26 10:32 d1</span><br><span class="line">drwxr-xr-x. 2 root root 4096 Jul 26 10:32 d2</span><br><span class="line">/app/:</span><br><span class="line">total 12</span><br><span class="line">-rw-r–r–. 1 root root 153 Jul 26 10:33 1.txt</span><br><span class="line">drwxr-xr-x. 2 root root 4096 Jul 26 10:32 d1</span><br><span class="line">drwxr-xr-x. 2 root root 4096 Jul 26 10:32 d2</span><br><span class="line">[root@Souler6 app]<span class="comment"># ll</span></span><br><span class="line">total 12</span><br><span class="line">-rw-r–r–. 1 root root 307 Jul 26 10:48 1.txt <span class="comment">#由于内容追加，文件大小从153字节增长到了307字节</span></span><br><span class="line">drwxr-xr-x. 2 root root 4096 Jul 26 10:32 d1</span><br><span class="line">drwxr-xr-x. 2 root root 4096 Jul 26 10:32 d2</span><br></pre></td></tr></table></figure></p>
+<p>从上文可以看到三种I/O他们都带着一个数字<br>STDIN（0）,STDOUT（1）,STDERR2（2）<br>那这些数字是代表什么呢</p>
+<pre><code>实际上 ‘&gt;’是’1&gt;’ 我们可以这样理解 1&gt;重定向标准输出（数字具体表现在这）
+有’1&gt;’当然还有’2&gt;’ 我们可以这样理解 2&gt;重定向标准错误（数字具体表现在这）
+</code></pre><p>通过上面的例子<br>eg:我们直接尝试把标准错误追加到1.txt （也可以）<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@Souler6 app]<span class="comment"># ll /app/ /error/ 2&gt; 1.txt #把标准错误重定向至1.txt中打印</span></span><br><span class="line">/app/: <span class="comment">#没有重定向标准输出，故默认在屏幕中打印</span></span><br><span class="line">total 12</span><br><span class="line">-rw-r–r–. 1 root root 53 Jul 26 11:07 1.txt</span><br><span class="line">drwxr-xr-x. 2 root root 4096 Jul 26 10:32 d1</span><br><span class="line">drwxr-xr-x. 2 root root 4096 Jul 26 10:32 d2</span><br><span class="line">[root@Souler6 app]<span class="comment"># cat 1.txt # 查看1.txt是否打印了标准错误</span></span><br><span class="line">ls: cannot access /error/: No such file or directory <span class="comment">#可以看到打印了标准错误，文件中内容不再有之前的标准输出，可以说明由于不是重定向追加，所以直接覆盖了原文件1.txt</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="关于重定向的语法…"><a href="#关于重定向的语法…" class="headerlink" title="关于重定向的语法…"></a>关于重定向的语法…</h2><p>eg：</p>
+<pre><code>&gt;    重定向标准输出
+&gt;&gt;   重定向标准输出追加
+2&gt;   重定向标准错误
+2&gt;&gt;  重定向标准错误追加
+set -C 重定向不覆盖
+set +C 重定向覆盖
+&gt;|   重定向强行覆盖 （用于忽略set -C）
+2&gt;&amp;1 将2（标准错误）重定向到1（标准输出）
+1&gt;&amp;2 将1（标准输出）重定向到2（标准错误）
+’&amp;&gt;’ 等同于’2&gt;&amp;1’把标准错误重定向为标准输出,
+(‘&amp;&gt;’兼容性不如’2&gt;&amp;1’,二者重定向意思等同)
+</code></pre><p><strong>面试题:以下哪个与众不同</strong></p>
+<p>A app.sh &gt; f1.log 2&gt;&amp;1<br>B app.sh 2&gt;&amp;1 &gt; f1.log<br>C app.sh 2&gt;f1.log 1&gt;&amp;2<br>D app.sh &amp;&gt;f1.log</p>
+<p>答案：<strong>B</strong></p>
+<h2 id="tr命令"><a href="#tr命令" class="headerlink" title="tr命令"></a>tr命令</h2><p>既有标准输入，也有标准输出<br>tr可以使用’&lt;’重定向输入，’&gt;’重定向输入<br>举个简单例子：将1.txt内容中的小写字母转换为大写字母<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@Souler6 app]<span class="comment"># cat 1.txt</span></span><br><span class="line">ls: cannot access /error/: No such file or directory</span><br><span class="line">ls: cannot access /error/: No such file or directory</span><br><span class="line">[root@Souler6 app]<span class="comment"># tr ‘a-z’ ‘A-Z’ &lt; 1.txt #将1.txt的内容重定向为标准输入</span></span><br><span class="line">LS: CANNOT ACCESS /ERROR/: NO SUCH FILE OR DIRECTORY</span><br><span class="line">LS: CANNOT ACCESS /ERROR/: NO SUCH FILE OR DIRECTORY</span><br></pre></td></tr></table></figure></p>
+<h2 id="多行STDIN"><a href="#多行STDIN" class="headerlink" title="多行STDIN"></a>多行STDIN</h2><p>使用“&lt;&lt;终止词”命令从键盘把多行重导向给STDIN直到终止词位置<br><strong>cat &gt; file &lt;&lt; EOF</strong><br>举个简单的例子:</p>
+<pre><code>[root@Souler6 app]# cat &gt; 1.txt &lt;&lt;EOF
+&gt;123
+&gt;456
+&gt;789
+EOF
+[root@Souler6 app]# cat 1.txt
+123
+456
+789
+</code></pre><p>（EOF可以是任意字符）</p>
+<h2 id="管道"><a href="#管道" class="headerlink" title="管道"></a>管道</h2><p>用符号 <strong>|</strong> 表示<br>用法：cmd1 <strong>|</strong> cmd2 <strong>|</strong> cmd3 <strong>|</strong> …<br>多个命令的链接，最后的命令会基于上一命令的基础，对内容进行再处理进行输出<br>举个简单例子：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@Souler6 app]<span class="comment"># ll 1.txt #未加管道</span></span><br><span class="line">-rw-r–r–. 1 root root 106 Jul 26 11:15 1.txt</span><br><span class="line">[root@Souler6 app]<span class="comment"># ll 1.txt | tr ‘a-z’ ‘A-Z’ #加管道进行大小写字母转换，并输出</span></span><br><span class="line">-RW-R–R–. 1 ROOT ROOT 106 JUL 26 11:15 1.TXT</span><br></pre></td></tr></table></figure></p>
+<h2 id="tee命令"><a href="#tee命令" class="headerlink" title="tee命令"></a>tee命令</h2><p>用于管道中打印子shell的标准输出</p>
+<p>（待补充）<br>未完待续…</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/07/26/第二周-命令、索引节点、标准IO和管道/" data-id="cjk6tl60m0004awisuv278c47" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/07/29/第二周-用户和组的管理以及权限管理/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          用户和组的管理以及权限管理
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/07/25/第二周-关于文件系统，以及history、cd、ls、touch、cp命令/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">关于文件系统，以及history、cd、ls、touch、cp命令以及通配符</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/07/29/第二周-用户和组的管理以及权限管理/">用户和组的管理以及权限管理</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/26/第二周-命令、索引节点、标准IO和管道/">命令、索引节点、标准I/O和管道</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/25/第二周-关于文件系统，以及history、cd、ls、touch、cp命令/">关于文件系统，以及history、cd、ls、touch、cp命令以及通配符</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/22/个人blog搭建（纯属笔记，不做任何解释）/">个人blog搭建（纯属笔记，不做任何解释）</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/21/第一周-计算机基础知识/">计算机基础知识</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 ACan<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
