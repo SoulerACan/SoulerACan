@@ -295,27 +295,38 @@ let ++n   表示为n=n+1，先加1后赋值
 let --n   表示为n=n-1,同上
 </code></pre><p>eg：<br>let m=n++, echo $m ,m=10<br>eg：<br>let m=++n, echo $m ,m=11</p>
 <p><strong>逻辑运算：</strong></p>
-<p>true or false：  </p>
-<pre><code>true：1    //此处1表示真
-false：0   //0表示假
-</code></pre><p>与或非运算、异或运算：</p>
-<p>与：符号&amp;表示与</p>
-<pre><code>有0则为假
-    1与1=1
-    1与0=0
-    0与1=0
-    0与0=0
-</code></pre><p>或：符号|表示或<br>    有1则为真<br>        1或1=1<br>        1或0=1<br>        0或1=1<br>        0或0=0<br>非：符号！表示非</p>
-<pre><code>对结果取反
-    ！1=0
-    ！0=1
-</code></pre><p>异或：符号^表示异或：</p>
-<pre><code>异或的两个值，相同为假，不同为真
-    1^1=0 假
-    1^0=1 真
-    0^1=1 真
-    0^0=0 假               
-存在公式：a^b=c,b=c^a,a=c^b
+<pre><code>true or false：  
+    true：1    //此处1表示真
+    false：0   //0表示假
+
+与或非运算、异或运算：
+
+    与：符号&amp;表示与
+        有0则为假
+        1与1=1
+        1与0=0
+        0与1=0
+        0与0=0
+
+    或：符号|表示或
+        有1则为真
+        1或1=1
+        1或0=1
+        0或1=1
+        0或0=0
+
+    非：符号！表示非
+        对结果取反
+        ！1=0
+        ！0=1
+
+    异或：符号^表示异或：
+        异或的两个值，相同为假，不同为真
+        1^1=0 假
+        1^0=1 真
+        0^1=1 真
+        0^0=0 假               
+        公式：a^b=c,b=c^a,a=c^b
 </code></pre><p>eg：判断a大于b是否为真，并使用逻辑取反<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@Souler7 bin]<span class="comment"># a=5</span></span><br><span class="line">[root@Souler7 bin]<span class="comment"># b=10</span></span><br><span class="line">[root@Souler7 bin]<span class="comment"># [ $a -gt $b ]   //判断逻辑运算是否为真</span></span><br><span class="line">[root@Souler7 bin]<span class="comment"># echo $?</span></span><br><span class="line">1   //结果为假</span><br><span class="line">[root@Souler7 bin]<span class="comment"># [ ! $a -gt $b ]  //对逻辑运算取反</span></span><br><span class="line">[root@Souler7 bin]<span class="comment"># echo $?</span></span><br><span class="line">0   //取反后，结果为真</span><br></pre></td></tr></table></figure></p>
 <p>eg：利用异或运算，互换a与b的值<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@Souler7 ~]<span class="comment"># a=10</span></span><br><span class="line">[root@Souler7 ~]<span class="comment"># b=5</span></span><br><span class="line">[root@Souler7 ~]<span class="comment"># a=$[a^b]  //a此时拿到了中间值c</span></span><br><span class="line">[root@Souler7 ~]<span class="comment"># b=$[a^b]  //c与b异或且赋值给b，此时b得到了a的初始值10，b=10</span></span><br><span class="line">[root@Souler7 ~]<span class="comment"># a=$[a^b]  //c与b(a的初始值)异或,此时a的值为b的初始值5，a=5</span></span><br><span class="line">[root@Souler7 ~]<span class="comment"># echo a=$a b=$b </span></span><br><span class="line">a=5 b=10   //从该结果可看到实现了a与b的值互换</span><br></pre></td></tr></table></figure></p>
 <p>短路运算：</p>
@@ -480,7 +491,7 @@ false：0   //0表示假
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/08/05/第三周-shell脚本编程基础知识/" data-id="cjkgkimqx00061oisqspibep8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/08/05/第三周-shell脚本编程基础知识/" data-id="cjkgkqnlr0006pcis8hldxeba" class="article-share-link">Share</a>
       
       
     </footer>
@@ -714,7 +725,7 @@ eg：
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/08/01/第三周-文本处理工具和正则表达式/" data-id="cjkgkimq200001ois2ob764uv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/08/01/第三周-文本处理工具和正则表达式/" data-id="cjkgkqnks0000pcisp4bpppg0" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1189,7 +1200,7 @@ umask：文件的权限反向掩码，遮罩码
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/07/29/第二周-用户和组的管理以及权限管理/" data-id="cjkgkimqt00051oisgrfplor2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/07/29/第二周-用户和组的管理以及权限管理/" data-id="cjkgkqnlp0005pcis97fs14gt" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1436,7 +1447,7 @@ EOF
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/07/26/第二周-命令、索引节点、标准IO和管道/" data-id="cjkgkimqq00031oisv1l8ypcw" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/07/26/第二周-命令、索引节点、标准IO和管道/" data-id="cjkgkqnlo0004pcisicba7jdd" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1856,7 +1867,7 @@ cp[选项].. 源 目的
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/07/25/第二周-关于文件系统，以及history、cd、ls、touch、cp命令/" data-id="cjkgkimqg00011oisnwwvdyuq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/07/25/第二周-关于文件系统，以及history、cd、ls、touch、cp命令/" data-id="cjkgkqnl80002pcisjjfps4v7" class="article-share-link">Share</a>
       
       
     </footer>
@@ -2000,7 +2011,7 @@ $ git push origin master
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/07/22/个人blog搭建（纯属笔记，不做任何解释）/" data-id="cjkgkimqh00021oiskh764fnp" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/07/22/个人blog搭建（纯属笔记，不做任何解释）/" data-id="cjkgkqnl70001pcis0fg44y63" class="article-share-link">Share</a>
       
       
     </footer>
@@ -2505,7 +2516,7 @@ $ command --help
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/07/21/第一周-计算机基础知识/" data-id="cjkgkimqr00041ois6lov3iy7" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/07/21/第一周-计算机基础知识/" data-id="cjkgkqnlm0003pcisl48aak9d" class="article-share-link">Share</a>
       
       
     </footer>
