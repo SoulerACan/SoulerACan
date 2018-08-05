@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>shell脚本编程基础知识 | Souler ACan’s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="shell脚本编程基础编程基础程序:为了更好的处理数据   程序:算法+数据结构   数据:是程序的核心    数据结构：数据在计算集中的类型和组织方式   算法： 处理数据的方式   程序编程风格：   过程式：以指令为中心，数据服务于指令（shell编程基于过程式）   对象式：以数据为中心，（开发语言推崇使用）   shell程序：提供了编程能力，解释执行的过程shell编程：过程式、解释执">
+<meta property="og:type" content="article">
+<meta property="og:title" content="shell脚本编程基础知识">
+<meta property="og:url" content="http://yoursite.com/2018/08/05/第三周-shell脚本编程基础知识/index.html">
+<meta property="og:site_name" content="Souler ACan’s blog">
+<meta property="og:description" content="shell脚本编程基础编程基础程序:为了更好的处理数据   程序:算法+数据结构   数据:是程序的核心    数据结构：数据在计算集中的类型和组织方式   算法： 处理数据的方式   程序编程风格：   过程式：以指令为中心，数据服务于指令（shell编程基于过程式）   对象式：以数据为中心，（开发语言推崇使用）   shell程序：提供了编程能力，解释执行的过程shell编程：过程式、解释执">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-05T08:01:59.342Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="shell脚本编程基础知识">
+<meta name="twitter:description" content="shell脚本编程基础编程基础程序:为了更好的处理数据   程序:算法+数据结构   数据:是程序的核心    数据结构：数据在计算集中的类型和组织方式   算法： 处理数据的方式   程序编程风格：   过程式：以指令为中心，数据服务于指令（shell编程基于过程式）   对象式：以数据为中心，（开发语言推崇使用）   shell程序：提供了编程能力，解释执行的过程shell编程：过程式、解释执">
+  
+    <link rel="alternate" href="/atom.xml" title="Souler ACan’s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Souler ACan’s blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">who am i ？</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-第三周-shell脚本编程基础知识" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/05/第三周-shell脚本编程基础知识/" class="article-date">
+  <time datetime="2018-08-05T08:00:00.000Z" itemprop="datePublished">2018-08-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      shell脚本编程基础知识
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="shell脚本编程基础"><a href="#shell脚本编程基础" class="headerlink" title="shell脚本编程基础"></a>shell脚本编程基础</h1><h2 id="编程基础"><a href="#编程基础" class="headerlink" title="编程基础"></a>编程基础</h2><p><strong>程序:为了更好的处理数据</strong>  </p>
+<pre><code>程序:算法+数据结构  
+数据:是程序的核心   
+数据结构：数据在计算集中的类型和组织方式  
+算法： 处理数据的方式  
+</code></pre><p><strong>程序编程风格：</strong>  </p>
+<pre><code>过程式：以指令为中心，数据服务于指令（shell编程基于过程式）  
+对象式：以数据为中心，（开发语言推崇使用）  
+</code></pre><p>shell程序：提供了编程能力，解释执行的过程<br>shell编程：过程式、解释执行  </p>
+<p><strong>程序的执行方式：</strong></p>
+<pre><code>运行二进制指令
+    编程语言：人于计算机之间交互的语言
+低级编程语言：
+    机器：二进制的0和1的序列，称为机器指令
+    汇编：艰涩难懂，贴近硬件
+高级编程语言：
+    编译型语言：
+        英文句子--&gt;编译器--&gt;编译成机器代码--&gt;执行 （时间短）
+        典型：C
+    解释型语言：
+        英文句子--&gt;执行--&gt;解释器--&gt;解释成机器代码（每次执行都要有一个解释的过程，时间长）
+        典型：shell、python、perl
+Java的程序比较特殊： 转换中间代码（处理数据运行于虚拟机），屏蔽底层的接口，实现（一次编译到处运行）
+</code></pre><p><strong>编程的基本概念：</strong></p>
+<pre><code>编程逻辑处理方式：
+    顺序循环
+    循环执行
+    选择执行
+编程的基本结构：
+    各种系统命令的组合
+    数据存储：变量、数组
+    表达式：a+b
+    语句：if
+</code></pre><hr>
+<h2 id="脚本格式"><a href="#脚本格式" class="headerlink" title="脚本格式"></a>脚本格式</h2><p>—shell脚本：包含一些命令或声明，并符合一定格式的文本文件</p>
+<p><strong>格式要求：</strong> 首行shebang机制<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash  使用bash</span></span><br><span class="line"><span class="meta">#!/bin/csh   使用csh</span></span><br><span class="line"><span class="comment">#!/bin/python 使用python    //格式要求：首行shebang机制，命名与所用解释器有关</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>shell脚本的用途：</strong> 减少重复操作</p>
+<pre><code>自动化常用命令
+执行系统管理和故障排除
+创建简单的应用程序
+处理文本或文件
+</code></pre><p><strong>创建shell脚本：</strong><br>    第一步：使用文本编辑器来创建文本文件<br>      脚本内容的第一行必须是shebang机制#!/bin/bash  ，后续可以跟注释，注释以#开头，用于提醒其他人<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">eg：vim test.sh  //创建文本</span><br><span class="line"><span class="meta">#!/bin/bash  </span></span><br><span class="line"><span class="comment">#the first foot book   //此处为注释</span></span><br><span class="line">hellowold</span><br></pre></td></tr></table></figure></p>
+<p>第二步：运行脚本<br>        运行的方法有很多种 </p>
+<pre><code>直接运行解释器，将脚本作为解释器程序的参数运行  
+    bash test.sh  
+给予执行权限，将脚本放入$PATH变量中的所指定的路径  
+    chmod +x test.sh  
+    test.sh  
+亦可用绝对路径运行脚本  
+    /path/to/test  
+</code></pre><p>注意：脚本属于外部命令，外部命令执行需要通过$PATH变量所在路径去搜索命令  </p>
+<pre><code>将当前目录作为PATH变量中的路径(基于安全，此方法少用为好) 
+    PATH=.:$PATH
+        &apos;.&apos;表示当前目录，&apos;:&apos;为了保留之前的变量，用冒号隔开，将此变量加入配置文件中，并且source使配置文件生效即可  
+不常用的脚本运行方式：因为会改变环境变量
+    . test.sh      
+    source test.sh 
+</code></pre><p><strong>脚本规范：</strong>   脚本代码开头约定（除了shebang机制必须添加，其它注释看个人喜好添加）  </p>
+<pre><code>第一行一般为shebang机制
+作者
+日期
+版本号
+程序名
+程序作用
+版本更新的简要说明
+</code></pre><p><strong>脚本的基本结构：</strong>  </p>
+<pre><code>#!shebang 声明机制  
+configuration_variables 配置变量  
+function_definitions 函数定义  
+main_code 主程序代码  
+</code></pre><p><strong>脚本调试：</strong></p>
+<pre><code>检测脚本的语法错误：有时候报错的行数不是很精确，但是可在该行数附近找找错误
+    bash -n &lt;脚本程序&gt;
+跟踪调试命令的执行过程：    
+    bash -x &lt;脚本程序&gt;
+</code></pre><p><strong>脚本名字：</strong> 见名知义</p>
+<pre><code>命名方法驼峰法
+    小驼峰 studentName  第二个单词首字母大写
+    大驼峰 StudentName  全部的单词首字母大写
+</code></pre><p>bug：程序错误<br>debug：调试错误，解决错误</p>
+<hr>
+<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><p><strong>变量：</strong> 代表一块内存空间，人为的命名  </p>
+<pre><code>变量：任何一种编程语言都应该有变量，为程序提供数据
+程序：是由指令加数据组成
+    指令：由程序文件提供
+    数据：IO设备、文件、管道、变量
+
+程序也有另外一种说法：是由算法+数据结构来组成的
+
+变量名：指向内存空间中某一段空间中的起始地址
+变量名+指向的内存空间
+
+变量赋值：name=value
+变量类型：存储格式、表示数据范围、参与的运算
+    用于编程语言：
+        强类型变量：
+        弱类型变量：
+            bash中把所有变量都被视为字符型，不支持浮点数据
+            bash中的变量无需事先声明，同时实现声明和赋值。
+                声明的意思：说明变量类型，定义变量名称
+变量替换：把变量名出现的位置替换为其所指向的内存空间中的数据
+变量引用：$(变量名),$变量名        null视为空
+变量命名法则：见名知义
+    不能使用程序中的保留至：如if，for
+    只能使用数字、字母、下划线，且不能以数字开头
+    统一命名规则：驼峰法
+        小驼峰studentName
+        大驼峰StudentName
+</code></pre><p><strong>bash进程：</strong>  bash子进程与bash父进程</p>
+<pre><code>显示进程树
+    pstree -p
+
+查看bash父进 程编号
+    echo $PPID
+
+查看当前bash进程编号
+    echo $$ 
+
+开启bash子进程，脚本在子进程中运行，不影响环境变量
+    bash &lt;脚本程序&gt; 
+
+不开启bash子进程，执行脚本将影响环境变量
+    source &lt;脚本程序&gt; 
+
+()开启子进程执行命令，{}当前进程执行命令 
+</code></pre><p><strong>bash中变量种类:</strong>  局部变量、环境变量、只读变量、位置变量</p>
+<p>局部变量：当前进程使用</p>
+<pre><code>生效范围在当前终端的shell进程中，若切换终端窗口，变量失效
+</code></pre><p>   eg：name=xcb<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@Souler7 ~]<span class="comment"># name=xcb   //变量赋值</span></span><br><span class="line">[root@Souler7 ~]<span class="comment"># echo $name  //当前终端窗取变量</span></span><br><span class="line">xcb         //当前终端窗口打印了xcb</span><br><span class="line">[root@Souler7 ~]<span class="comment"># echo $name  //新开终端窗口去变量</span></span><br><span class="line">            //新的终端窗口打印为空，变量失效</span><br><span class="line">[root@Souler7 ~]<span class="comment">#</span></span><br></pre></td></tr></table></figure></p>
+<p>环境变量：可以传给子进程使用，但不可传给父进程  </p>
+<pre><code>由bash内建的变量
+    PATH  外部命令的搜索路径
+    SHELL 当前使用的shell
+    USER  用户名
+    UID   用户ID
+    HOME  用户家目录
+    PWD   当前路径
+    SHLVL 当前子进程嵌套数
+    LANG  语言
+    MAIL  邮箱路径
+    HOSTNAME 主机名
+    HISTSIZE 最大历史记录条数
+    RANDOM  随机数
+显示前一个命令的参数
+    echo $_  
+删除变量，但无法删除只读变量
+    unset &lt;变量名&gt; 
+将局部变量定义为环境变量
+    exprot 
+
+查看环境变量
+    env 
+    printenv
+    export 
+    declare -x
+</code></pre><p> eg:RANDOM的使用<br> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@Souler7 ~]<span class="comment"># echo $[RANDOM%7]  表示对7取模，0-6随机数</span></span><br><span class="line">[root@Souler7 ~]<span class="comment"># echo $[RANDOM%7+31]]  取31到37的随机数</span></span><br><span class="line">[root@Souler7 ~]<span class="comment"># color=$[RANDOM%7+31];echo -e "\e[1;$&#123;color&#125;mCLOOR\e[0m"    取随机颜色</span></span><br></pre></td></tr></table></figure></p>
+<p>只读变量：不可删除</p>
+<pre><code>声明只读变量
+    declare -r
+    readonly
+查看只读变量
+    readonly -p  
+</code></pre><p>位置变量：灵活  </p>
+<pre><code>$1,$2...: 对应第1、第2等参数，
+    shift 每个数据往左移动1位，原先第一个数据被覆盖
+    shift n 同理
+
+$* 所有变量 例如：a b c 参数被视为一个字符串
+$@ 所有变量 例如：a b c 每个参数是独立的字符串
+    注意：$*与$@只有在被双引号抱起来的时候才会有差异，否则，为相同意思
+$# 传递给脚本的参数个数
+$0 显示命令本身，脚本所在路径
+    basename $0 只显示脚本名称
+set-- 清空所有位置变量
+</code></pre><p>退出状态：特殊变量$?的使用  </p>
+<pre><code>查看上一命令执行结果成功或失败
+    echo $?
+默认退出状态码    
+    0 代表成功， 1-255 代表失败
+自定义退出状态码
+    exit [n]
+</code></pre><p>注意：脚本中一旦遇到exit命令，脚本会立即终止，终止退出状态取决于exit命令后面的数字<br>注意：如果脚本未指定退出状态码，整个脚本的退出状态码取决于脚本中执行的最后一条命令的状态码</p>
+<hr>
+<h2 id="运算"><a href="#运算" class="headerlink" title="运算"></a>运算</h2><p><strong>bash中的算数运算：</strong>  仅支持整数运算</p>
+<pre><code>bash中的算数运算：let
+运算符号：+、-、*、/、%（取余）、**（乘方）
+数字运算符号
+        -eq 等于
+        -ne 不等于
+        -lt 小于
+        -le 小于等于
+        -gt 大于
+        -ge 大于等于
+</code></pre><p>方法1：let sum=a+b 默认是let，可不加<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@Souler7 bin]<span class="comment"># a=2</span></span><br><span class="line">[root@Souler7 bin]<span class="comment"># b=3</span></span><br><span class="line">[root@Souler7 bin]<span class="comment"># let sum=a+b</span></span><br><span class="line">[root@Souler7 bin]<span class="comment"># echo $sum</span></span><br><span class="line">5</span><br></pre></td></tr></table></figure></p>
+<p>方法2：echo $[a*b] ，a=$[算术表达式]可用于逻辑运算<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">    [root@Souler7 bin]<span class="comment"># a=2</span></span><br><span class="line">    [root@Souler7 bin]<span class="comment"># b=3</span></span><br><span class="line">    [root@Souler7 bin]<span class="comment"># echo $[a*b]</span></span><br><span class="line">    6</span><br><span class="line">```     </span><br><span class="line">方法3：<span class="built_in">echo</span> $((a-b))  ((a=10+11)) <span class="built_in">echo</span> <span class="variable">$a</span> 会显示a运算的值为21</span><br><span class="line">```bash</span><br><span class="line">    [root@Souler7 bin]<span class="comment"># a=2</span></span><br><span class="line">    [root@Souler7 bin]<span class="comment"># b=3</span></span><br><span class="line">    [root@Souler7 bin]<span class="comment"># echo $((a-b))</span></span><br><span class="line">    -1</span><br></pre></td></tr></table></figure></p>
+<p>方法4：expr命令，专门做运算的命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@Souler7 bin]<span class="comment"># expr 3 \* 3   (每个参数之间都需要空格，且*需要转义，+不用转义)</span></span><br><span class="line">9</span><br></pre></td></tr></table></figure></p>
+<p>方法5：declare -i (个人不推荐使用，给每个变量赋值都需要加declare -i)单独使用可用于查看变量<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@Souler7 bin]<span class="comment"># declare -i a=5</span></span><br><span class="line">[root@Souler7 bin]<span class="comment"># declare -i b=6</span></span><br><span class="line">[root@Souler7 bin]<span class="comment"># declare -i sum=$a*$b</span></span><br><span class="line">[root@Souler7 bin]<span class="comment"># echo $sum</span></span><br><span class="line">30</span><br></pre></td></tr></table></figure></p>
+<p>方法6：使用bc命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@Souler7 bin]<span class="comment"># echo 30/5|bc</span></span><br><span class="line">6</span><br></pre></td></tr></table></figure></p>
+<p><strong>赋值：</strong></p>
+<p>增强型赋值：+=、-=、*=、/=、%=<br>eg：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@Souler7 bin]<span class="comment"># let n=10</span></span><br><span class="line">[root@Souler7 bin]<span class="comment"># echo $n </span></span><br><span class="line">10</span><br><span class="line">[root@Souler7 bin]<span class="comment"># let n+=10  (表示为n=n+10)</span></span><br><span class="line">[root@Souler7 bin]<span class="comment"># echo $n  </span></span><br><span class="line">20</span><br></pre></td></tr></table></figure></p>
+<p>自增自减：  </p>
+<pre><code>let n++   表示为n=n+1,先赋值后加1
+let n--   表示为n=n-1,同上
+let ++n   表示为n=n+1，先加1后赋值
+let --n   表示为n=n-1,同上
+</code></pre><p>eg：<br>let m=n++, echo $m ,m=10<br>eg：<br>let m=++n, echo $m ,m=11</p>
+<p><strong>逻辑运算：</strong></p>
+<p>true or false：  </p>
+<pre><code>true：1    //此处1表示真
+false：0   //0表示假
+</code></pre><p>与或非运算、异或运算：</p>
+<p>与：符号&amp;表示与</p>
+<pre><code>有0则为假
+    1与1=1
+    1与0=0
+    0与1=0
+    0与0=0
+</code></pre><p>或：符号|表示或<br>    有1则为真<br>        1或1=1<br>        1或0=1<br>        0或1=1<br>        0或0=0<br>非：符号！表示非</p>
+<pre><code>对结果取反
+    ！1=0
+    ！0=1
+</code></pre><p>异或：符号^表示异或：</p>
+<pre><code>异或的两个值，相同为假，不同为真
+    1^1=0 假
+    1^0=1 真
+    0^1=1 真
+    0^0=0 假               
+存在公式：a^b=c,b=c^a,a=c^b
+</code></pre><p>eg：判断a大于b是否为真，并使用逻辑取反<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">    [root@Souler7 bin]<span class="comment"># a=5</span></span><br><span class="line">    [root@Souler7 bin]<span class="comment"># b=10</span></span><br><span class="line">    [root@Souler7 bin]<span class="comment"># [ $a -gt $b ]   //判断逻辑运算是否为真</span></span><br><span class="line">    [root@Souler7 bin]<span class="comment"># echo $?</span></span><br><span class="line">    1   //结果为假</span><br><span class="line">    [root@Souler7 bin]<span class="comment"># [ ! $a -gt $b ]  //对逻辑运算取反</span></span><br><span class="line">    [root@Souler7 bin]<span class="comment"># echo $?</span></span><br><span class="line">    0   //取反后，结果为真</span><br><span class="line">```               </span><br><span class="line"></span><br><span class="line">eg：利用异或运算，互换a与b的值</span><br><span class="line">```bash</span><br><span class="line">    [root@Souler7 ~]<span class="comment"># a=10</span></span><br><span class="line">    [root@Souler7 ~]<span class="comment"># b=5</span></span><br><span class="line">    [root@Souler7 ~]<span class="comment"># a=$[a^b]  //a此时拿到了中间值c</span></span><br><span class="line">    [root@Souler7 ~]<span class="comment"># b=$[a^b]  //c与b异或且赋值给b，此时b得到了a的初始值10，b=10</span></span><br><span class="line">    [root@Souler7 ~]<span class="comment"># a=$[a^b]  //c与b(a的初始值)异或,此时a的值为b的初始值5，a=5</span></span><br><span class="line">    [root@Souler7 ~]<span class="comment"># echo a=$a b=$b </span></span><br><span class="line">    a=5 b=10   //从该结果可看到实现了a与b的值互换</span><br></pre></td></tr></table></figure></p>
+<p>短路运算：  </p>
+<pre><code>短路与：符号&amp;&amp;表示短路与
+    cmd1 &amp;&amp; cmd2 若cmd1为true ，则执行cmd2
+    cmd1 &amp;&amp; cmd2 若cmd1为false，则不执行cmd2
+短路或：符号||表示短路或
+    cmd1 || cmd2 若cmd1为ture ，则不执行cmd2
+    cmd1 || cmd2 若cmd1为false，则执行cmd2
+组合使用：    
+    如果cmd1成功，就执行cmd2，如果cmd2成功(此处假设cmd2总成功)，就执行cmd3
+        cmd1 &amp;&amp; cmd2 || cmd3
+    如果cmd1失败，就执行cmd2，如果cmd2成功(此处假设cmd2总成功)，就执行cmd3
+        cmd1 || cmd2 &amp;&amp; cmd3
+</code></pre><hr>
+<h2 id="条件测试"><a href="#条件测试" class="headerlink" title="条件测试"></a>条件测试</h2><p><strong>描述：</strong><br>判断某需求是否满足，需要由测试机制来实现  </p>
+<pre><code>专用的测试表达式需要由测试命令辅助完成测试过程
+</code></pre><p>评估布尔声明，以便用在条件性执行中  </p>
+<pre><code>若真，则返回0
+若假，则返回1
+
+注意：此处的0、1不同于逻辑运算中的0、1
+</code></pre><p><strong>测试命令：</strong> test命令</p>
+<pre><code>三种用法：
+    test EXPRESSION
+    [ EXPRESSION ]
+    [[ EXPRESSION ]]
+注意：[ ]内有字符即为真，无字符则为假，空格也算字符
+</code></pre><p>用法1：test EXPRESSION  (不常用)<br>eg：判断a是否小于b<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@Souler7 bin]<span class="comment"># a=5</span></span><br><span class="line">[root@Souler7 bin]<span class="comment"># b=10</span></span><br><span class="line">[root@Souler7 bin]<span class="comment"># test $a -lt $b</span></span><br><span class="line">[root@Souler7 bin]<span class="comment"># echo $? //查看结果</span></span><br><span class="line">0     //结果为真,故a小于b</span><br><span class="line">[root@Souler7 bin]<span class="comment">#</span></span><br></pre></td></tr></table></figure></p>
+<p>用法2：[ EXPRESSION ]</p>
+<pre><code>选项：
+    用于文件类型测试：
+        [ -a &quot;文件路径&quot; ] 判断文件的存在性，存在为真，不存在为假
+        [ -b &quot;文件路径&quot; ] 判断文件是否为 块设备，存在为真，不存在为假
+        [ -c &quot;文件路径&quot; ] 判断文件是否为字符设备，存在为真，不存在为假
+        [ -d &quot;文件路径&quot; ] 判断文件是否为文件夹，是为真，否为假
+        [ -f &quot;文件路径&quot; ] 判断文件是否为普通文件，是为真，否为假
+            -f无法识别软链接，而是直接识别软链接所指向的文件
+        [ -L &quot;文件路径&quot; ] 判断文件是否为软链接，是为真，否为假
+            -L针对判断软链接
+    用于文件权限测试：
+        [ -u &quot;文件路径&quot; ] 判断文件是否为有suid权限，是为真，否为假
+        [ -g &quot;文件路径&quot; ] 判断文件是否为有sgid权限，是为真，否为假
+        [ -k &quot;文件路径&quot; ] 判断文件是否为有sticky权限，是为真，否为假
+        [ -r &quot;文件路径&quot; ] 判断对文件是否为有r权限，是为真，否为假
+        [ -w &quot;文件路径&quot; ] 判断对文件是否为有w权限，是为真，否为假
+        [ -x &quot;文件路径&quot; ] 判断对文件是否为有x权限，是为真，否为假
+    用于文件大小测试：
+        [ -s &quot;文件路径&quot; ] 判断对文件是否存在且非空，是为真，否为假
+    用于测试文件是否打开：
+        [ -t fd ] 判断文件描述符是否在某终端已经打开，是为真，否为假
+        [ -N &quot;文件路径&quot; ] 判断文件从上一次被读取之后是否被修改过，是为真，否为假
+        [ -O &quot;文件路径&quot; ] 判断对文件属主是否为当前登录用户，是为真，否为假
+        [ -G &quot;文件路径&quot; ] 判断对文件属组是否为当前登录用户，是为真，否为假
+    双目测试：
+        [ &quot;文件1&quot; -ef &quot;文件2&quot; ] 判断文件1是否为文件2的硬链接，是为真，否为假
+        [ &quot;文件1&quot; -nt &quot;文件2&quot; ] 判断文件1是否比文件2新，是为真，否为假
+        [ &quot;文件1&quot; -ef &quot;文件2&quot; ] 判断文件1是否比文件2旧，是为真，否为假
+    同时判断多个条件，
+        用-a来实现，表示与的关系
+        用-o来实现，表示或的关系
+        用！来实现，表示非,取反的关系
+</code></pre><p>eg：判断a是否小于b<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@Souler7 bin]<span class="comment"># a=5</span></span><br><span class="line">[root@Souler7 bin]<span class="comment"># b=10</span></span><br><span class="line">[root@Souler7 bin]<span class="comment"># [ $a -lt $b ]</span></span><br><span class="line">[root@Souler7 bin]<span class="comment"># echo $? //查看结果</span></span><br><span class="line">0     //结果为真,故a小于b</span><br><span class="line">[root@Souler7 bin]<span class="comment">#</span></span><br></pre></td></tr></table></figure></p>
+<p>eg：判断字符串是否相等,以及使用双引号””，避免出现语法错误<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">[root@Souler7 bin]<span class="comment"># name=xcb   //变量赋值xcb   </span></span><br><span class="line">[root@Souler7 bin]<span class="comment"># i=xcb      //变量赋值xcb</span></span><br><span class="line">[root@Souler7 bin]<span class="comment"># [ name = i ] &amp;&amp; echo ture || echo false  //语法错误，变量名前没有加$符号</span></span><br><span class="line"><span class="literal">false</span>   //此判断不成立</span><br><span class="line">[root@Souler7 bin]<span class="comment"># [ "$name" = "$i" ] &amp;&amp; echo ture || echo false //加上$再次判断</span></span><br><span class="line"><span class="literal">true</span>    //name=i，结果为真,输出<span class="literal">true</span></span><br><span class="line">[root@Souler7 bin]<span class="comment"># i=xxx    //对i赋一个新的值xxx</span></span><br><span class="line">[root@Souler7 bin]<span class="comment"># [ "$name" = "$i" ] &amp;&amp; echo ture || echo false //判断变量name字符串是否等于变量i的字符串</span></span><br><span class="line"><span class="literal">false</span>  //name≠i，结果为假，输出<span class="literal">false</span></span><br><span class="line">[root@Souler7 bin]<span class="comment"># [ "$name" = "xcb" ] &amp;&amp; echo ture || echo false //判断变量name的字符串是否为xcb</span></span><br><span class="line"><span class="literal">true</span>  //name=xcb，结果为真，输出<span class="literal">true</span></span><br><span class="line">[root@Souler7 bin]<span class="comment"># [ $name = xxx ] &amp;&amp; echo ture || echo false  //判断变量n的字符串是否为xxx</span></span><br><span class="line"><span class="literal">false</span>  //name≠xxx，结果为假，输出<span class="literal">false</span></span><br><span class="line">[root@Souler7 bin]<span class="comment"># unset name  //删除变量name</span></span><br><span class="line">[root@Souler7 bin]<span class="comment"># [ $name = xcb ] &amp;&amp; echo ture || echo false //当变量不存在，且变量名没有用双引号引起来，进行判断</span></span><br><span class="line">-bash: [: =: unary operator expected // 此处提示语法错误</span><br><span class="line"><span class="literal">false</span>  //此判断不成立</span><br><span class="line">[root@Souler7 bin]<span class="comment"># [ "$name" = xcb ] &amp;&amp; echo ture || echo false //当变量不存在，且变量名加了双引号，进行判断</span></span><br><span class="line"><span class="literal">false</span>  //此处没有提示语法错误，而是把引号内的变量名作为空字符，进行判断，结果为假</span><br><span class="line">[root@Souler7 bin]<span class="comment"># [ "" = xcb ] &amp;&amp; echo ture || echo false     </span></span><br><span class="line"><span class="literal">false</span>  //此处的结果，等同上一句的意思，亦可得出结论：加双引号可避免出现语法错误</span><br></pre></td></tr></table></figure></p>
+<p>eg：判断变量是否为空，-z，-n的使用<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@Souler7 ~]<span class="comment"># name=xcb  //变量赋值</span></span><br><span class="line">[root@Souler7 ~]<span class="comment"># echo $name</span></span><br><span class="line">xcb</span><br><span class="line">[root@Souler7 ~]<span class="comment"># [ -z "$name" ] &amp;&amp; echo true ||echo false //判断变量是否为空，空为true，非空为false</span></span><br><span class="line"><span class="literal">false</span> //变量非空，结果为<span class="literal">false</span></span><br><span class="line">[root@Souler7 ~]<span class="comment"># [ -n "$name" ] &amp;&amp; echo true ||echo false //判断变量是否非空，空为false，非空为true</span></span><br><span class="line"><span class="literal">true</span>  //变量非空</span><br><span class="line">[root@Souler7 ~]<span class="comment"># unset name //删除变量</span></span><br><span class="line">[root@Souler7 ~]<span class="comment"># [ -z "$name" ] &amp;&amp; echo true ||echo false //判断变量是否为空，空为true，非空为false</span></span><br><span class="line"><span class="literal">true</span> //变量为空，结果为<span class="literal">true</span></span><br><span class="line">[root@Souler7 ~]<span class="comment"># [ -n "$name" ] &amp;&amp; echo true ||echo false //判断变量是否非空，空为false，非空为true</span></span><br><span class="line"><span class="literal">false</span> //变量为空，结果为<span class="literal">false</span></span><br></pre></td></tr></table></figure></p>
+<p>用法3：[[ EXPRESSION ]] 支持扩展正则表达式，=~引用正则表达式，变量用双引号引起来，扩展正则表达式不需要加引号</p>
+<pre><code>[[ =~ ]] 支持扩展正则模式
+[[ == ]] 支持通配符
+[[ != ]] 表示取反
+</code></pre><p>eg：使用扩展正则表达式，判断变量是否符合要求<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@Souler6 bin]<span class="comment"># file=abc.sh        </span></span><br><span class="line">[root@Souler6 bin]<span class="comment"># [[ $file =~ \.sh$ ]] &amp;&amp; echo true || echo false //判断变量是否为.sh结尾的字符串</span></span><br><span class="line"><span class="literal">true</span>   //变量条件符合，结果为真</span><br><span class="line">[root@Souler6 bin]<span class="comment"># [[ $file =~ \.s$ ]] &amp;&amp; echo true || echo false  //判断变量是否为.s结尾的字符串</span></span><br><span class="line"><span class="literal">false</span>  //变量条件不符合，结果为假</span><br></pre></td></tr></table></figure></p>
+<p>eg：判断输出的数字是否为合法IP地址<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@Souler6 bin]<span class="comment"># ip=1.1.1.1; [[ "$ip" =~ ^(([1-9]?[0-9]|1[0-9][0-9]|2[0-5][0-5])\.)&#123;3&#125;([1-9]?[0-9]|1[0-9][0-9]|2[0-5][0-5])$ ]] &amp;&amp; echo ip right || echo ip error  </span></span><br><span class="line">ip right  //ip符合</span><br><span class="line">[root@Souler6 bin]<span class="comment"># ip=111.111.111.1111; [[ "$ip" =~ ^(([1-9]?[0-9]|1[0-9][0-9]|2[0-5][0-5])\.)&#123;3&#125;([1-9]?[0-9]|1[0-9][0-9]|2[0-5][0-5])$ ]] &amp;&amp; echo ip right || echo ip error  </span></span><br><span class="line">ip error  //ip不符合</span><br></pre></td></tr></table></figure></p>
+<p>注意：EXPRESSION前后必须有空白字符  </p>
+<hr>
+<h2 id="配置用户环境"><a href="#配置用户环境" class="headerlink" title="配置用户环境"></a>配置用户环境</h2><p><strong>bash的配置文件:</strong> 按生效范围划分，存在两类：</p>
+<pre><code>全局配置：
+    /etc/profile
+    /etc/profile.d/*.sh
+    /etc/bashrc
+个人配置：
+    ~/.bashrc
+    ~/.bash_profile
+</code></pre><p><strong>shell登录的两种方式：</strong></p>
+<p>交互式登录：</p>
+<pre><code>1.通过终端输入账号密码登录
+2.使用su - username 切换的用户
+    配置文件的生效顺序：
+        1--&gt;/etc/profile
+        2--&gt;/etc/profile.d/*.sh
+        3--&gt;~/.bash_profile
+        4--&gt;~/.bashrc
+        5--&gt;/etc/bashrc
+</code></pre><p>非交互式登录:</p>
+<pre><code>1.su username
+2.图形界面打开的终端
+3.执行脚本       
+4.任何其他的bash实例
+    配置文件的生效顺序：
+        1--&gt;~/.bashrc
+        2--&gt;/etc/bashrc
+        3--&gt;/etc/profile.d/*.sh
+</code></pre><p><strong>类：</strong></p>
+<p>profile类:为交互式登录的shell提供配置</p>
+<pre><code>全局配置：
+    /etc/profile
+    /etc/profile.d/*.sh
+个人配置：
+    ~/.bash_profile
+        实现环境变量和函数启动程序的文件
+
+功用：
+    用于定义环境变量
+    运行命令或脚本
+</code></pre><p>bashrcl类：为非交互式和交互式登录的shell提供配置</p>
+<pre><code>全局设置:
+    /etc/bashrc
+个人设置：
+    ~/.bashrc
+        实现别名和函数的文件
+功用：
+    定义命令别名和函数
+    定义本地变量
+</code></pre><p><strong>编辑配置文件生效：</strong></p>
+<pre><code>修改profile和bashrc文件后需生效
+    两种方法：
+        重启
+        source或.
+    eg：. ~/.bashrc
+</code></pre><p><strong>bash退出任务:</strong></p>
+<pre><code>~/.bash_logout文件：用于自动备份，删除临时文件
+
+用户退出登录shell时，自动执行
+
+在/etc/目录下创建nologin文件，可禁止普通用户登录
+</code></pre><hr>
+<p><strong>关于bash如何展开命令行</strong>  (此处并不能很好的诠释，见谅..)</p>
+<pre><code>把命令行分成单个命令词
+展开别名
+展开大括号的声明{}
+展开波浪符声明~
+命令替换$()和``
+再次把命令行分成命令词
+展开文件通配*、？、[abc]
+准备I/O重定向&lt;、&gt;
+运行命令
+</code></pre><p>防止扩展：  </p>
+<pre><code>加引号
+    双引号&quot;&quot;防止部分扩展(本人目前还未搞懂..)
+    单引号&apos;&apos;防止所有扩展
+    反斜杆 \防止所有扩展
+</code></pre><p>eg：反斜杆 \,转义符，单引号’’也能防止所有扩展，除了’本身，双引号则行不通<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@Souler7 ~]<span class="comment"># name=xcb</span></span><br><span class="line">[root@Souler7 ~]<span class="comment"># echo $name</span></span><br><span class="line">xcb</span><br><span class="line">[root@Souler7 ~]<span class="comment"># echo \$name  //此处转义，$name只当为普通字符串</span></span><br><span class="line"><span class="variable">$name</span></span><br><span class="line">[root@Souler7 ~]<span class="comment"># echo '$name'  //此处''转义</span></span><br><span class="line"><span class="variable">$name</span></span><br><span class="line">[root@Souler7 ~]<span class="comment"># echo "$name"</span></span><br><span class="line">xcb</span><br></pre></td></tr></table></figure></p>
+<p><strong>read命令：</strong> 把输入值分配给一个或多个shell变量常用于脚本</p>
+<pre><code>选项： 
+    -p        指定要显示的提示
+    -s        静默输入，一般用于密码
+    -n        N指定输出的字符长度N，达到字符长度自动退出
+    -d &apos;字符&apos; 指定输入字符为结束符，结束符出现立即退出
+    -t n      等待n秒，时间到自动退出
+对多个变量赋值
+    read x y z &lt;&lt;&lt; &quot;aaa bbb ccc&quot;
+</code></pre><p>eg：read -p用法<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@Souler7 ~]<span class="comment"># read -p "Please input your name:" -t 30 xcb //定义变量名称为xcb，且该命令执行后等待输入</span></span><br><span class="line">Please input your name:xucanbin   //此处输入字符串xucanbin并自动赋值给变量xcb</span><br><span class="line">[root@Souler7 ~]<span class="comment"># echo $xcb   //打印变量xcb的值</span></span><br><span class="line">xucanbin    //显示为xcb的值为xucanbin</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/08/05/第三周-shell脚本编程基础知识/" data-id="cjkgkacl00006g8isik0jn0jo" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/08/01/第三周-文本处理工具和正则表达式/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">文本处理工具和正则表达式</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/08/05/第三周-shell脚本编程基础知识/">shell脚本编程基础知识</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/01/第三周-文本处理工具和正则表达式/">文本处理工具和正则表达式</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/29/第二周-用户和组的管理以及权限管理/">用户和组的管理以及权限管理</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/26/第二周-命令、索引节点、标准IO和管道/">命令、索引节点、标准I/O和管道</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/25/第二周-关于文件系统，以及history、cd、ls、touch、cp命令/">关于文件系统，以及history、cd、ls、touch、cp命令以及通配符</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 ACan<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
