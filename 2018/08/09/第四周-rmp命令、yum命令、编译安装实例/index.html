@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>rmp命令、yum命令、编译安装实例 | Souler ACan’s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="DAY 11软件包管理之 rpm命令软件运行环境和编译 不同的库对应不同的API接口:     开发应用程序常常需要调用库文件     使用对应的API接口调用对应的库     POSIX：通用的API接口  不同系统的ABI接口不同:     应用程序想在某个系统上运行，需要有对应的ABI接口，符合系统的接口     linux与Windows ABI接口不同     linux ：ELF">
+<meta property="og:type" content="article">
+<meta property="og:title" content="rmp命令、yum命令、编译安装实例">
+<meta property="og:url" content="http://yoursite.com/2018/08/09/第四周-rmp命令、yum命令、编译安装实例/index.html">
+<meta property="og:site_name" content="Souler ACan’s blog">
+<meta property="og:description" content="DAY 11软件包管理之 rpm命令软件运行环境和编译 不同的库对应不同的API接口:     开发应用程序常常需要调用库文件     使用对应的API接口调用对应的库     POSIX：通用的API接口  不同系统的ABI接口不同:     应用程序想在某个系统上运行，需要有对应的ABI接口，符合系统的接口     linux与Windows ABI接口不同     linux ：ELF">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-12T13:24:27.788Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="rmp命令、yum命令、编译安装实例">
+<meta name="twitter:description" content="DAY 11软件包管理之 rpm命令软件运行环境和编译 不同的库对应不同的API接口:     开发应用程序常常需要调用库文件     使用对应的API接口调用对应的库     POSIX：通用的API接口  不同系统的ABI接口不同:     应用程序想在某个系统上运行，需要有对应的ABI接口，符合系统的接口     linux与Windows ABI接口不同     linux ：ELF">
+  
+    <link rel="alternate" href="/atom.xml" title="Souler ACan’s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Souler ACan’s blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">who am i ？</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-第四周-rmp命令、yum命令、编译安装实例" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/09/第四周-rmp命令、yum命令、编译安装实例/" class="article-date">
+  <time datetime="2018-08-09T12:00:00.000Z" itemprop="datePublished">2018-08-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      rmp命令、yum命令、编译安装实例
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="DAY-11"><a href="#DAY-11" class="headerlink" title="DAY 11"></a>DAY 11</h1><h2 id="软件包管理之-rpm命令"><a href="#软件包管理之-rpm命令" class="headerlink" title="软件包管理之 rpm命令"></a>软件包管理之 rpm命令</h2><p><strong>软件运行环境和编译</strong></p>
+<pre><code>不同的库对应不同的API接口:
+    开发应用程序常常需要调用库文件
+    使用对应的API接口调用对应的库
+    POSIX：通用的API接口
+
+不同系统的ABI接口不同:
+    应用程序想在某个系统上运行，需要有对应的ABI接口，符合系统的接口
+    linux与Windows ABI接口不同
+    linux ：ELF
+    Windows：PE
+
+程序源代码的处理过程：
+    预处理：
+        把必要的数据简单处理，删除注释信息
+    编译： 静态编译或动态编译
+        语法检查
+        把文本文件转化为汇编语言
+    汇编：
+        将汇编语言生成二进制的机器码
+    链接：静态链接或动态链接
+        由于调用库，把调用的程序库与程序关联起来，已形成一个完整的二进制程序
+</code></pre><p><strong>库文件</strong>  </p>
+<pre><code>查看命令所调用的库
+    ldd &lt;二进制程序路径&gt;
+加载库文件
+    ldconfig
+显示已缓存的所有可用库文件以及文件路径
+    /sbin/ldconfig -p
+映射关系
+    配置文件：/etc/ld.so.conf
+            /etc/ld.so.conf.d/*.conf
+    缓存文件：/etc/ldconfig.so.cache
+</code></pre><p><strong>RPM包管理员</strong> (RPM Package Manager)</p>
+<p>功能：将编译好的应用程序的各组成文件打包一个或几个程序包文件，从而方便快捷的实现程序包的安装、卸载、升级、查询、校验、数据库维护。</p>
+<pre><code>RPM软件包分为:二进制包、源代码包和delta包三种。
+
+    &lt;二进制包&gt;可以直接安装在计算机中：
+        二进制应用程序的组成部分：二进制文件、库文件、配置文件、帮助文件。
+    &lt;源代码包&gt;将会有RPM自动编译、安装。
+        源代码包经常以src.rpm作为后缀名
+
+包文件组成：
+    RPM包内的文件
+    RPM的元数据：
+        名称，版本，依赖性，描述等
+        安装或卸载时运行的脚本
+</code></pre><p>RPM数据库：/var/lib/rpm </p>
+<pre><code>该数据库很重要，包含以下信息：
+    安装软件包名称及版本
+    依赖关系
+    功能说明
+    包安装后生成的各文件路径级校验码
+</code></pre><p>rpm命令：</p>
+<pre><code>    用法：rpm [option] [参数]
+    常用： rpm -ivh &lt;rpm软件包&gt;
+    选项：
+        -i/--install 安装软件包
+            -i --test 测试安装，但不执行安装
+            -i --nodeps 忽略依赖性，安装后也不能用，需补全依赖环境，用于强制安装和强制卸载
+            -i --replacepkgs  强制重装软件
+            -i --replacefiles  强制重装替换文件
+        -v 显示安装过程
+        -vv 更加详细的安装过程
+        -U 升级软件包，不存在旧版本则安装软件包，不常用
+        -F 升级软件包，不存在旧版本则不做任何操作，不常用
+        -e 删除软件
+            --allmatches 所有
+            --nodeps 忽略依赖性卸载
+        -h 安装进度，以#号显示进度条
+        -q 查看信息
+            -ql 查看软件包的文件列表
+                -qlp 针对未安装的程序包，查看文件列表
+            -qa 查看当前系统已安装的软件包
+            -qf 查看包版本，查找rpm数据库
+            -qc 查看配置文件
+            -qd 查看man帮助文档文件
+
+            --whatrequires 查询包的依赖性 
+            --changelog 查看版本更新日志
+            --script 查看程序包自带脚本
+        --oldpackage 降级
+        --force 强制安装
+        -V 校验
+
+    参数：
+        软件包
+
+rpm公钥：pubkey
+    导入本地公钥：rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+
+rpm的缺点：不能解决包的依赖性
+
+注意：一般用-i升级内核；-U、-F用于升级但不常用
+</code></pre><hr>
+<h2 id="软件安装工具之-yum命令"><a href="#软件安装工具之-yum命令" class="headerlink" title="软件安装工具之 yum命令"></a>软件安装工具之 yum命令</h2><p><strong>yum：底层依赖于rpm，主要用于解决依赖性</strong></p>
+<p>使用yum安装软件的前提：需要相应的yum仓库和yum源</p>
+<p><strong>yum相关配置文件：</strong></p>
+<pre><code>yum配置文件
+    /etc/yum.conf
+yum日志文件 
+    /var/log/yum.log
+yum仓库配置文件
+    /etc/yum.repos.d/*.repo
+</code></pre><p><strong>自定义yum源：将任目录作为yum源</strong></p>
+<pre><code>creatrepo &lt;路径&gt;
+eg：将当前目录作为yum源
+    createrepo .
+</code></pre><p><strong>创建yum仓库</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">在/etc/yum.repos.d目录下，创建&lt;任意名字&gt;.repo文件,格式如下</span><br><span class="line">    [仓库名]</span><br><span class="line">    name=仓库名.db</span><br><span class="line">    baseurl=file://本地yum源</span><br><span class="line">            http://网络yum源</span><br><span class="line">    gpgcheck=0</span><br></pre></td></tr></table></figure></p>
+<p>yum命令：</p>
+<pre><code>用法：yum [option].. &lt;软件名&gt;
+常用：
+    yum install &lt;软件名&gt;  安装软件
+    yum remove  &lt;软件名&gt;  卸载软件
+选项：
+    yum repolist 显示yum仓库列表
+    yum hisroty    查看安装历史列表
+        info n 查看安装的软件
+        undo n 撤销安装
+        redo n 重新执行n历史行为
+    yum clean all 清理yum缓存
+    yum install -q -y 静默安装
+    yum provides 查看文件由哪个包提供
+    yum search 搜索
+    yum grouplist  包组列表
+    yum groupinstall 安装包组
+    yum groupremove 卸载包组
+    yum groupinfo 查看包组信息
+    yum deplist  查看依赖文件
+    yum reinstall  重装
+    yum info 查看包信息
+</code></pre><p>其他用法：安装工具yum-utils</p>
+<pre><code>repoquery -ql 查找未安装好的软件包中包含的文件列表，基于yum仓库的工具 yum-utils
+</code></pre><hr>
+<h2 id="编译安装软件：-程序包编译可以实现功能定制以及路径指定"><a href="#编译安装软件：-程序包编译可以实现功能定制以及路径指定" class="headerlink" title="编译安装软件： 程序包编译可以实现功能定制以及路径指定"></a>编译安装软件： 程序包编译可以实现功能定制以及路径指定</h2><p><strong>编译安装软件实例</strong></p>
+<pre><code>eg：编译安装httpd软件
+
+1.准备环境
+安装编译httpd所需工具
+    develoment tools
+    apr-devel
+    apr-util-devel
+    gcc
+    openssl-devel
+2.了解软件
+进入源码包解压后的目录中，寻找3个文件
+    README      介绍软件的文件
+    INSTALL     安装教程的文件
+    ./configure 可执行文件
+
+3.编译安装。
+执行命令: ./configure --prefix=路径  &amp;&amp; make &amp;&amp; make install  ,等待编译安装完成
+    补充：
+        ./configure有许多的选项
+        默认选项：--prefix=路径 不分文别类，所有东西存放在同一目录
+        其他选项数量太多，而且还不会使用，不一一列出
+
+4.添加PATH变量
+进入指定的安装目录下的bin/apachectl
+    将路径添加PATH变量并重定向到文件中：
+    echo &apos;PATH=&lt;路径&gt;:$PATH&apos;  &gt;  /etc/profile.d/httpd.sh   
+    使配置文件生效：
+    source /etc/profile.d/http.sh
+    启动http服务：
+    apachectl start  
+    可查看端口80是否已开启：
+    ss -ntl 
+至此，http的编译安装以及使用完成。
+</code></pre><p>额外的知识穿插：</p>
+<pre><code>救援模式下：切换根目录为/mnt/sysimage/
+    --root=/mnt/sysimage/
+    chroot /mnt/sysimage/ 
+
+恢复被删除的二进制文件，可能会造成文件属性丢失，与源文件属性不同
+    rpm2cpio |cpio -tv 预览文件
+    rpm2cpio |cpio -idv ./usr/bin/tree  取出指定文件，
+    cp .usr/bin/tree /usr/bin/
+
+扫描磁盘命令
+    echo &apos;- - -&apos; &gt; /sys/class/scsi_host/host0/scan
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/08/09/第四周-rmp命令、yum命令、编译安装实例/" data-id="cjkqze7ab00007gisdz2d426t" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/08/12/第四周-磁盘相关知识以及分区管理和挂载/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          磁盘相关知识以及分区管理和挂载
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/08/07/第四周-文件查找以及打包压缩/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">文件查找以及打包压缩</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/08/12/第四周-磁盘相关知识以及分区管理和挂载/">磁盘相关知识以及分区管理和挂载</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/09/第四周-rmp命令、yum命令、编译安装实例/">rmp命令、yum命令、编译安装实例</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/07/第四周-文件查找以及打包压缩/">文件查找以及打包压缩</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/05/第三周-shell脚本编程基础知识/">shell脚本编程基础知识</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/01/第三周-文本处理工具和正则表达式/">文本处理工具和正则表达式</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 ACan<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
