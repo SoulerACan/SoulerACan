@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>RAID知识点以及命令dd、du、df | Souler ACan’s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="命令dfdd、dudf命令 查看设备占用空间的工具 用法: 选项:     -H 以1000为单位，(卖U盘的厂商都是这样)     -h 以1024为单位,人类易读     -T 显示文件系统     -i 节点使用情况     -P 格式对其 du命令  列出并查看所有文件夹的大小 选项：     -h 人类易读     -s 将文件夹的大小汇总     --max-depth=1 显示一级目">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RAID知识点以及命令dd、du、df">
+<meta property="og:url" content="http://yoursite.com/2018/08/15/第五周-RAID/index.html">
+<meta property="og:site_name" content="Souler ACan’s blog">
+<meta property="og:description" content="命令dfdd、dudf命令 查看设备占用空间的工具 用法: 选项:     -H 以1000为单位，(卖U盘的厂商都是这样)     -h 以1024为单位,人类易读     -T 显示文件系统     -i 节点使用情况     -P 格式对其 du命令  列出并查看所有文件夹的大小 选项：     -h 人类易读     -s 将文件夹的大小汇总     --max-depth=1 显示一级目">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-19T13:37:52.184Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RAID知识点以及命令dd、du、df">
+<meta name="twitter:description" content="命令dfdd、dudf命令 查看设备占用空间的工具 用法: 选项:     -H 以1000为单位，(卖U盘的厂商都是这样)     -h 以1024为单位,人类易读     -T 显示文件系统     -i 节点使用情况     -P 格式对其 du命令  列出并查看所有文件夹的大小 选项：     -h 人类易读     -s 将文件夹的大小汇总     --max-depth=1 显示一级目">
+  
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Souler ACan’s blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">This is hexo theme</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-第五周-RAID" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/15/第五周-RAID/" class="article-date">
+  <time datetime="2018-08-15T12:00:00.000Z" itemprop="datePublished">2018-08-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      RAID知识点以及命令dd、du、df
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="命令dfdd、du"><a href="#命令dfdd、du" class="headerlink" title="命令dfdd、du"></a>命令dfdd、du</h2><p>df命令</p>
+<pre><code>查看设备占用空间的工具
+用法:
+选项:
+    -H 以1000为单位，(卖U盘的厂商都是这样)
+    -h 以1024为单位,人类易读
+    -T 显示文件系统
+    -i 节点使用情况
+    -P 格式对其
+</code></pre><p>du命令 </p>
+<pre><code>列出并查看所有文件夹的大小
+选项：
+    -h 人类易读
+    -s 将文件夹的大小汇总
+    --max-depth=1 显示一级目录下的文件夹
+    --max-depth=0 显示目录本身
+</code></pre><p>dd命令</p>
+<pre><code>转换或复制文件
+用法：dd if=/path/from/SRC of=/path/to/DEST bs=  count=
+bs=表示复制单元大小，count表示复制多少个bs
+修复老旧硬盘，消磁
+dd if=/dev/sda of=/dev/sda
+</code></pre><h2 id="RAID"><a href="#RAID" class="headerlink" title="RAID"></a>RAID</h2><p>多个磁盘合成一个”阵列”来提供更好的性能、冗余，或者两者都提供。<br>RAID成服务器标配，内置RAID卡</p>
+<p>提高IO能力<br>    磁盘并行读写<br>提高耐用性<br>磁盘冗余来实现<br>级别：多块磁盘组织在一起的工作方式有所不同<br>RAID实现的方式：<br>    外接式磁盘阵列：通过扩展卡提供适配能力<br>    内接式RAID：主板集成RAID控制器<br>        安装OS前在BIOS里配置<br>    软件RAID：通过OS实现</p>
+<p>RAID防止物理损坏</p>
+<p>存储方式：将文件分为若干块chunk，将chunk均匀的存储在每个硬盘上</p>
+<p><strong>RAID级别</strong></p>
+<p>RAID 0 （条带集）</p>
+<pre><code>磁盘利用率100%
+性能好，容错性差，服务器上一般不用
+存储方式：将文件分为若干块chunk，将chunk均匀的存储在每个硬盘上   
+chunk
+</code></pre><p>RAID 1  （镜像）</p>
+<pre><code>磁盘利用率50%
+读写性能有所下降
+有容错能力
+最少硬盘数：2，2N
+自动备份
+</code></pre><p>已被淘汰：RAID 4 (带校验位的条带集)<br>已被淘汰：JBOD</p>
+<p>RAID 5 (带1个校验位的条带集)</p>
+<pre><code>磁盘利用率(n-1/n)%
+读写性能提升
+容错性：允许坏1个硬盘,并将进入降级状态
+降级状态：
+    写入数据的速度变慢
+    读入数据的速度几乎没影响
+最少需要硬盘：3，3+
+</code></pre><p>RAID 6 (带2个校验位的条带集)</p>
+<pre><code>磁盘利用率(n-2/n)%
+读写性能提升
+容错性：允许坏2个硬盘，并进入降级状态
+降级状态：
+    写入数据的速度变慢
+    读入数据的速度几乎没影响
+最少需要硬盘：4，4+
+</code></pre><p>RAID 7 </p>
+<pre><code>可以理解为一个独立存储计算机，自带有操作系统和管理工具，可以独立运行，理论上性能最高的RAID模式
+</code></pre><p>RIAD 01</p>
+<pre><code>容错率低
+最少磁盘数：4，4+
+</code></pre><p>RAID 10 </p>
+<pre><code>读写性能提升
+容错率高
+最少磁盘数：4，4+
+</code></pre><p>RAID 50</p>
+<p><strong>mdadm命令</strong></p>
+<pre><code>选项：
+-C &lt;设备名&gt;   自定义创建RAID设备名
+    /dev/md0、/dev/md1、/dev/md2等等
+-a &lt;yes|no&gt;    是否初始化RAID设备
+-l&lt;n&gt;   n表示所创建的RAID级别
+-n&lt;n&gt; &lt;分区&gt; n表示分区成员个数，以及分区名字
+-D  &lt;设备名&gt;  查看RAID信息
+-Ds &lt;设备名&gt;  查看RAID的UUID
+-x&lt;n&gt; &lt;设备名&gt; n表示空白设备(非活动分区)的数量
+</code></pre><p><strong>软RIAD的创建实验系列</strong><br>实验：RAID 0</p>
+<pre><code>准备分区或者硬盘,记得给分区添加fd标签
+创建RAID
+mdadm -C /dev/md0 -a yes -l0 -n4 /dev/sd{b,c,d,e}1
+将uuid写入配置文件中
+mdadm -Ds /dev/md0 &gt; /etc/mdadm.conf
+创建文件系统
+mkfs.xfs /dev/md0
+创建挂载点
+mkdir /mnt/raid0
+配置fstab文件
+使配置文件生效
+mount -a
+</code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br></pre></td><td class="code"><pre><span class="line">[root@Souler7 ~]<span class="comment"># lsblk           </span></span><br><span class="line">NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT</span><br><span class="line">sda      8:0    0  120G  0 disk </span><br><span class="line">├─sda1   8:1    0    1G  0 part /boot</span><br><span class="line">├─sda2   8:2    0   50G  0 part /</span><br><span class="line">├─sda3   8:3    0   20G  0 part /app</span><br><span class="line">├─sda4   8:4    0    1K  0 part </span><br><span class="line">└─sda5   8:5    0    2G  0 part [SWAP]</span><br><span class="line">sdb      8:16   0    8G  0 disk </span><br><span class="line">└─sdb1   8:17   0    1G  0 part </span><br><span class="line">sdc      8:32   0    6G  0 disk </span><br><span class="line">└─sdc1   8:33   0    1G  0 part </span><br><span class="line">sdd      8:48   0    4G  0 disk </span><br><span class="line">└─sdd1   8:49   0    1G  0 part </span><br><span class="line">sde      8:64   0    2G  0 disk </span><br><span class="line">└─sde1   8:65   0    1G  0 part </span><br><span class="line">[root@Souler7 ~]<span class="comment"># mdadm -C /dev/md0 -a yes -l0 -n4 /dev/sd&#123;b,c,d,e&#125;1  </span></span><br><span class="line">mdadm: Defaulting to version 1.2 metadata</span><br><span class="line">mdadm: array /dev/md0 started.</span><br><span class="line">[root@Souler7 ~]<span class="comment"># mdadm -D /dev/md0  </span></span><br><span class="line"></span><br><span class="line">/dev/md0:</span><br><span class="line">           Version : 1.2</span><br><span class="line">     Creation Time : Sat Aug 18 19:21:14 2018</span><br><span class="line">        Raid Level : raid0</span><br><span class="line">        Array Size : 4186112 (3.99 GiB 4.29 GB)</span><br><span class="line">      Raid Devices : 4</span><br><span class="line">     Total Devices : 4</span><br><span class="line">       Persistence : Superblock is persistent</span><br><span class="line"></span><br><span class="line">       Update Time : Sat Aug 18 19:21:14 2018</span><br><span class="line">             State : clean </span><br><span class="line">    Active Devices : 4</span><br><span class="line">   Working Devices : 4</span><br><span class="line">    Failed Devices : 0</span><br><span class="line">     Spare Devices : 0</span><br><span class="line"></span><br><span class="line">        Chunk Size : 512K</span><br><span class="line"></span><br><span class="line">Consistency Policy : none</span><br><span class="line"></span><br><span class="line">              Name : Souler7.localdomain:0  (<span class="built_in">local</span> to host Souler7.localdomain)</span><br><span class="line">              UUID : 59d6abd0:ca5d529b:0a58fb7c:c8a5dfdc</span><br><span class="line">            Events : 0</span><br><span class="line"></span><br><span class="line">    Number   Major   Minor   RaidDevice State</span><br><span class="line">       0       8       17        0      active sync   /dev/sdb1</span><br><span class="line">       1       8       33        1      active sync   /dev/sdc1</span><br><span class="line">       2       8       49        2      active sync   /dev/sdd1</span><br><span class="line">       3       8       65        3      active sync   /dev/sde1</span><br><span class="line">[root@Souler7 ~]<span class="comment"># mdadm -Ds /dev/md0 &gt; /etc/mdadm.conf</span></span><br><span class="line">[root@Souler7 ~]<span class="comment"># cat /etc/mdadm.conf</span></span><br><span class="line">ARRAY /dev/md0 metadata=1.2 name=Souler7.localdomain:0 UUID=59d6abd0:ca5d529b:0a58fb7c:c8a5dfdc</span><br><span class="line">[root@Souler7 ~]<span class="comment"># mkfs.xfs /dev/md0</span></span><br><span class="line">meta-data=/dev/md0               isize=512    agcount=8, agsize=130816 blks</span><br><span class="line">         =                       sectsz=512   attr=2, projid32bit=1</span><br><span class="line">         =                       crc=1        finobt=0, sparse=0</span><br><span class="line">data     =                       bsize=4096   blocks=1046528, imaxpct=25</span><br><span class="line">         =                       sunit=128    swidth=512 blks</span><br><span class="line">naming   =version 2              bsize=4096   ascii-ci=0 ftype=1</span><br><span class="line"><span class="built_in">log</span>      =internal <span class="built_in">log</span>           bsize=4096   blocks=2560, version=2</span><br><span class="line">         =                       sectsz=512   sunit=8 blks, lazy-count=1</span><br><span class="line">realtime =none                   extsz=4096   blocks=0, rtextents=0</span><br><span class="line">[root@Souler7 ~]<span class="comment"># lsblk</span></span><br><span class="line">NAME    MAJ:MIN RM  SIZE RO TYPE  MOUNTPOINT</span><br><span class="line">sda       8:0    0  120G  0 disk  </span><br><span class="line">├─sda1    8:1    0    1G  0 part  /boot</span><br><span class="line">├─sda2    8:2    0   50G  0 part  /</span><br><span class="line">├─sda3    8:3    0   20G  0 part  /app</span><br><span class="line">├─sda4    8:4    0    1K  0 part  </span><br><span class="line">└─sda5    8:5    0    2G  0 part  [SWAP]</span><br><span class="line">sdb       8:16   0    8G  0 disk  </span><br><span class="line">└─sdb1    8:17   0    1G  0 part  </span><br><span class="line">  └─md0   9:0    0    4G  0 raid0 </span><br><span class="line">sdc       8:32   0    6G  0 disk  </span><br><span class="line">└─sdc1    8:33   0    1G  0 part  </span><br><span class="line">  └─md0   9:0    0    4G  0 raid0 </span><br><span class="line">sdd       8:48   0    4G  0 disk  </span><br><span class="line">└─sdd1    8:49   0    1G  0 part  </span><br><span class="line">  └─md0   9:0    0    4G  0 raid0 </span><br><span class="line">sde       8:64   0    2G  0 disk  </span><br><span class="line">└─sde1    8:65   0    1G  0 part  </span><br><span class="line">  └─md0   9:0    0    4G  0 raid0 </span><br><span class="line">[root@Souler7 ~]<span class="comment"># lsblk -f</span></span><br><span class="line">NAME    FSTYPE    LABEL                 UUID                                 MOUNTPOINT</span><br><span class="line">sda                                                                          </span><br><span class="line">├─sda1  xfs                             0969a307-2d09-4c7d-b13d-6aa550635363 /boot</span><br><span class="line">├─sda2  xfs                             c074ae1d-45ec-4214-a9a1-af4357b03745 /</span><br><span class="line">├─sda3  xfs                             551335e1-2a4e-4b36-a2bb-3197f391b6c3 /app</span><br><span class="line">├─sda4                                                                       </span><br><span class="line">└─sda5  swap                            62f3e665-d832-444f-8217-f8713f5228a7 [SWAP]</span><br><span class="line">sdb                                                                          </span><br><span class="line">└─sdb1  linux_rai Souler7.localdomain:0 59d6abd0-ca5d-529b-0a58-fb7cc8a5dfdc </span><br><span class="line">  └─md0 xfs                             b8f25a84-c016-4005-9581-c13c99dc33db </span><br><span class="line">sdc                                                                          </span><br><span class="line">└─sdc1  linux_rai Souler7.localdomain:0 59d6abd0-ca5d-529b-0a58-fb7cc8a5dfdc </span><br><span class="line">  └─md0 xfs                             b8f25a84-c016-4005-9581-c13c99dc33db </span><br><span class="line">sdd                                                                          </span><br><span class="line">└─sdd1  linux_rai Souler7.localdomain:0 59d6abd0-ca5d-529b-0a58-fb7cc8a5dfdc </span><br><span class="line">  └─md0 xfs                             b8f25a84-c016-4005-9581-c13c99dc33db </span><br><span class="line">sde                                                                          </span><br><span class="line">└─sde1  linux_rai Souler7.localdomain:0 59d6abd0-ca5d-529b-0a58-fb7cc8a5dfdc </span><br><span class="line">  └─md0 xfs                             b8f25a84-c016-4005-9581-c13c99dc33db </span><br><span class="line">[root@Souler7 ~]<span class="comment"># mdadm -Ds /dev/md0 &gt; /etc/mdadm.conf</span></span><br><span class="line">[root@Souler7 ~]<span class="comment"># mkfs.xfs /dev/md0</span></span><br><span class="line">meta-data=/dev/md0               isize=512    agcount=8, agsize=130816 blks</span><br><span class="line">         =                       sectsz=512   attr=2, projid32bit=1</span><br><span class="line">         =                       crc=1        finobt=0, sparse=0</span><br><span class="line">data     =                       bsize=4096   blocks=1046528, imaxpct=25</span><br><span class="line">         =                       sunit=128    swidth=512 blks</span><br><span class="line">naming   =version 2              bsize=4096   ascii-ci=0 ftype=1</span><br><span class="line"><span class="built_in">log</span>      =internal <span class="built_in">log</span>           bsize=4096   blocks=2560, version=2</span><br><span class="line">         =                       sectsz=512   sunit=8 blks, lazy-count=1</span><br><span class="line">realtime =none                   extsz=4096   blocks=0, rtextents=0</span><br><span class="line">[root@Souler7 ~]<span class="comment"># lsblk</span></span><br><span class="line">NAME    MAJ:MIN RM  SIZE RO TYPE  MOUNTPOINT</span><br><span class="line">sda       8:0    0  120G  0 disk  </span><br><span class="line">├─sda1    8:1    0    1G  0 part  /boot</span><br><span class="line">├─sda2    8:2    0   50G  0 part  /</span><br><span class="line">├─sda3    8:3    0   20G  0 part  /app</span><br><span class="line">├─sda4    8:4    0    1K  0 part  </span><br><span class="line">└─sda5    8:5    0    2G  0 part  [SWAP]</span><br><span class="line">sdb       8:16   0    8G  0 disk  </span><br><span class="line">└─sdb1    8:17   0    1G  0 part  </span><br><span class="line">  └─md0   9:0    0    4G  0 raid0 </span><br><span class="line">sdc       8:32   0    6G  0 disk  </span><br><span class="line">└─sdc1    8:33   0    1G  0 part  </span><br><span class="line">  └─md0   9:0    0    4G  0 raid0 </span><br><span class="line">sdd       8:48   0    4G  0 disk  </span><br><span class="line">└─sdd1    8:49   0    1G  0 part  </span><br><span class="line">  └─md0   9:0    0    4G  0 raid0 </span><br><span class="line">sde       8:64   0    2G  0 disk  </span><br><span class="line">└─sde1    8:65   0    1G  0 part  </span><br><span class="line">  └─md0   9:0    0    4G  0 raid0 </span><br><span class="line">[root@Souler7 ~]<span class="comment"># lsblk -f</span></span><br><span class="line">NAME    FSTYPE    LABEL                 UUID                                 MOUNTPOINT</span><br><span class="line">sda                                                                          </span><br><span class="line">├─sda1  xfs                             0969a307-2d09-4c7d-b13d-6aa550635363 /boot</span><br><span class="line">├─sda2  xfs                             c074ae1d-45ec-4214-a9a1-af4357b03745 /</span><br><span class="line">├─sda3  xfs                             551335e1-2a4e-4b36-a2bb-3197f391b6c3 /app</span><br><span class="line">├─sda4                                                                       </span><br><span class="line">└─sda5  swap                            62f3e665-d832-444f-8217-f8713f5228a7 [SWAP]</span><br><span class="line">sdb                                                                          </span><br><span class="line">└─sdb1  linux_rai Souler7.localdomain:0 59d6abd0-ca5d-529b-0a58-fb7cc8a5dfdc </span><br><span class="line">  └─md0 xfs                             b8f25a84-c016-4005-9581-c13c99dc33db </span><br><span class="line">sdc                                                                          </span><br><span class="line">└─sdc1  linux_rai Souler7.localdomain:0 59d6abd0-ca5d-529b-0a58-fb7cc8a5dfdc </span><br><span class="line">  └─md0 xfs                             b8f25a84-c016-4005-9581-c13c99dc33db </span><br><span class="line">sdd                                                                          </span><br><span class="line">└─sdd1  linux_rai Souler7.localdomain:0 59d6abd0-ca5d-529b-0a58-fb7cc8a5dfdc </span><br><span class="line">  └─md0 xfs                             b8f25a84-c016-4005-9581-c13c99dc33db </span><br><span class="line">sde                                                                          </span><br><span class="line">└─sde1  linux_rai Souler7.localdomain:0 59d6abd0-ca5d-529b-0a58-fb7cc8a5dfdc </span><br><span class="line">  └─md0 xfs                             b8f25a84-c016-4005-9581-c13c99dc33db </span><br><span class="line">[root@Souler7 ~]<span class="comment"># mkdir /mnt/raid0</span></span><br><span class="line">[root@Souler7 ~]<span class="comment"># blkid /dev/md0</span></span><br><span class="line">/dev/md0: UUID=<span class="string">"b8f25a84-c016-4005-9581-c13c99dc33db"</span> TYPE=<span class="string">"xfs"</span> </span><br><span class="line">[root@Souler7 ~]<span class="comment"># vim /etc/fstab </span></span><br><span class="line">[root@Souler7 ~]<span class="comment"># df</span></span><br><span class="line">Filesystem     1K-blocks    Used Available Use% Mounted on</span><br><span class="line">/dev/sda2       52403200 4193080  48210120   9% /</span><br><span class="line">devtmpfs          483096       0    483096   0% /dev</span><br><span class="line">tmpfs             498988       0    498988   0% /dev/shm</span><br><span class="line">tmpfs             498988    8744    490244   2% /run</span><br><span class="line">tmpfs             498988       0    498988   0% /sys/fs/cgroup</span><br><span class="line">/dev/sda3       20961280   32944  20928336   1% /app</span><br><span class="line">/dev/sda1        1038336  157968    880368  16% /boot</span><br><span class="line">tmpfs              99800      28     99772   1% /run/user/0</span><br><span class="line">[root@Souler7 ~]<span class="comment"># mount -a</span></span><br><span class="line">[root@Souler7 ~]<span class="comment"># df</span></span><br><span class="line">Filesystem     1K-blocks    Used Available Use% Mounted on</span><br><span class="line">/dev/sda2       52403200 4193080  48210120   9% /</span><br><span class="line">devtmpfs          483096       0    483096   0% /dev</span><br><span class="line">tmpfs             498988       0    498988   0% /dev/shm</span><br><span class="line">tmpfs             498988    8744    490244   2% /run</span><br><span class="line">tmpfs             498988       0    498988   0% /sys/fs/cgroup</span><br><span class="line">/dev/sda3       20961280   32944  20928336   1% /app</span><br><span class="line">/dev/sda1        1038336  157968    880368  16% /boot</span><br><span class="line">tmpfs              99800      28     99772   1% /run/user/0</span><br><span class="line">/dev/md0         4175872   33072   4142800   1% /mnt/raid0</span><br><span class="line">[root@Souler7 ~]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<p>实验：RAID 5</p>
+<pre><code>创建RAID
+mdadm -C /dev/md5 -a yes -l5 -n3 -x1 /dev/sd{b,c,d,}1 /dev/sda7
+查看RAID信息
+mdadm -D /dev/md5
+cat /proc/mdstat
+将配置写入文件
+mdadm -Ds /dev/md5 &gt; /ect/mdadm.conf
+创建文件系统
+mkfs.xfs /dev/md5
+创建挂载点
+mkdir /mnt/raid5
+配置fstab
+    略
+使配置文件生效
+mount -a
+</code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line">[root@Souler7 ~]<span class="comment"># mdadm -C /dev/md5 -a yes -l5 -n3 -x1 /dev/sd&#123;b,c,d&#125;1 /dev/sde1</span></span><br><span class="line">mdadm: Defaulting to version 1.2 metadata</span><br><span class="line">mdadm: array /dev/md5 started.</span><br><span class="line">[root@Souler7 ~]<span class="comment"># mdadm -D</span></span><br><span class="line">mdadm: No devices given.</span><br><span class="line">[root@Souler7 ~]<span class="comment"># mdadm -D /dev/md5</span></span><br><span class="line">/dev/md5:</span><br><span class="line">           Version : 1.2</span><br><span class="line">     Creation Time : Sat Aug 18 20:20:55 2018</span><br><span class="line">        Raid Level : raid5</span><br><span class="line">        Array Size : 2093056 (2044.00 MiB 2143.29 MB)</span><br><span class="line">     Used Dev Size : 1046528 (1022.00 MiB 1071.64 MB)</span><br><span class="line">      Raid Devices : 3</span><br><span class="line">     Total Devices : 4</span><br><span class="line">       Persistence : Superblock is persistent</span><br><span class="line"></span><br><span class="line">       Update Time : Sat Aug 18 20:21:01 2018</span><br><span class="line">             State : clean </span><br><span class="line">    Active Devices : 3</span><br><span class="line">   Working Devices : 4</span><br><span class="line">    Failed Devices : 0</span><br><span class="line">     Spare Devices : 1</span><br><span class="line"></span><br><span class="line">            Layout : left-symmetric</span><br><span class="line">        Chunk Size : 512K</span><br><span class="line"></span><br><span class="line">Consistency Policy : resync</span><br><span class="line"></span><br><span class="line">              Name : Souler7.localdomain:5  (<span class="built_in">local</span> to host Souler7.localdomain)</span><br><span class="line">              UUID : 48af101b:c9fe64dc:947299a3:44564504</span><br><span class="line">            Events : 18</span><br><span class="line"></span><br><span class="line">    Number   Major   Minor   RaidDevice State</span><br><span class="line">       0       8       17        0      active sync   /dev/sdb1</span><br><span class="line">       1       8       33        1      active sync   /dev/sdc1</span><br><span class="line">       4       8       49        2      active sync   /dev/sdd1</span><br><span class="line"></span><br><span class="line">       3       8       65        -      spare   /dev/sde1</span><br><span class="line">[root@Souler7 ~]<span class="comment"># mdadm -Ds /dev/md5 &gt; /etc/mdadm.conf</span></span><br><span class="line">[root@Souler7 ~]<span class="comment"># mkfs.xfs /dev/md5</span></span><br><span class="line">meta-data=/dev/md5               isize=512    agcount=8, agsize=65408 blks</span><br><span class="line">         =                       sectsz=512   attr=2, projid32bit=1</span><br><span class="line">         =                       crc=1        finobt=0, sparse=0</span><br><span class="line">data     =                       bsize=4096   blocks=523264, imaxpct=25</span><br><span class="line">         =                       sunit=128    swidth=256 blks</span><br><span class="line">naming   =version 2              bsize=4096   ascii-ci=0 ftype=1</span><br><span class="line"><span class="built_in">log</span>      =internal <span class="built_in">log</span>           bsize=4096   blocks=2560, version=2</span><br><span class="line">         =                       sectsz=512   sunit=8 blks, lazy-count=1</span><br><span class="line">realtime =none                   extsz=4096   blocks=0, rtextents=0</span><br><span class="line">[root@Souler7 ~]<span class="comment"># mkdir /mnt/raid5</span></span><br><span class="line">[root@Souler7 ~]<span class="comment"># df</span></span><br><span class="line">Filesystem     1K-blocks    Used Available Use% Mounted on</span><br><span class="line">/dev/sda2       52403200 4193028  48210172   9% /</span><br><span class="line">devtmpfs          483096       0    483096   0% /dev</span><br><span class="line">tmpfs             498988       0    498988   0% /dev/shm</span><br><span class="line">tmpfs             498988    8736    490252   2% /run</span><br><span class="line">tmpfs             498988       0    498988   0% /sys/fs/cgroup</span><br><span class="line">/dev/sda3       20961280   32944  20928336   1% /app</span><br><span class="line">/dev/sda1        1038336  157968    880368  16% /boot</span><br><span class="line">tmpfs              99800      28     99772   1% /run/user/0</span><br><span class="line">[root@Souler7 ~]<span class="comment"># vim /etc/fstab </span></span><br><span class="line">[root@Souler7 ~]<span class="comment"># mount -a</span></span><br><span class="line">[root@Souler7 ~]<span class="comment"># df</span></span><br><span class="line">Filesystem     1K-blocks    Used Available Use% Mounted on</span><br><span class="line">/dev/sda2       52403200 4193324  48209876   9% /</span><br><span class="line">devtmpfs          483096       0    483096   0% /dev</span><br><span class="line">tmpfs             498988       0    498988   0% /dev/shm</span><br><span class="line">tmpfs             498988    8736    490252   2% /run</span><br><span class="line">tmpfs             498988       0    498988   0% /sys/fs/cgroup</span><br><span class="line">/dev/sda3       20961280   32944  20928336   1% /app</span><br><span class="line">/dev/sda1        1038336  157968    880368  16% /boot</span><br><span class="line">tmpfs              99800      28     99772   1% /run/user/0</span><br><span class="line">/dev/md5         2082816   33072   2049744   2% /mnt/raid5</span><br><span class="line">[root@Souler7 ~]<span class="comment"># lsblk -f</span></span><br><span class="line">NAME    FSTYPE            LABEL                 UUID                                 MOUNTPOINT</span><br><span class="line">sda                                                                                  </span><br><span class="line">├─sda1  xfs                                     0969a307-2d09-4c7d-b13d-6aa550635363 /boot</span><br><span class="line">├─sda2  xfs                                     c074ae1d-45ec-4214-a9a1-af4357b03745 /</span><br><span class="line">├─sda3  xfs                                     551335e1-2a4e-4b36-a2bb-3197f391b6c3 /app</span><br><span class="line">├─sda4                                                                               </span><br><span class="line">└─sda5  swap                                    62f3e665-d832-444f-8217-f8713f5228a7 [SWAP]</span><br><span class="line">sdb                                                                                  </span><br><span class="line">└─sdb1  linux_raid_member Souler7.localdomain:5 48af101b-c9fe-64dc-9472-99a344564504 </span><br><span class="line">  └─md5 xfs                                     6095f832-6e1b-4a8a-9e92-4c186a6b03be /mnt/raid5</span><br><span class="line">sdc                                                                                  </span><br><span class="line">└─sdc1  linux_raid_member Souler7.localdomain:5 48af101b-c9fe-64dc-9472-99a344564504 </span><br><span class="line">  └─md5 xfs                                     6095f832-6e1b-4a8a-9e92-4c186a6b03be /mnt/raid5</span><br><span class="line">sdd                                                                                  </span><br><span class="line">└─sdd1  linux_raid_member Souler7.localdomain:5 48af101b-c9fe-64dc-9472-99a344564504 </span><br><span class="line">  └─md5 xfs                                     6095f832-6e1b-4a8a-9e92-4c186a6b03be /mnt/raid5</span><br><span class="line">sde                                                                                  </span><br><span class="line">└─sde1  linux_raid_member Souler7.localdomain:5 48af101b-c9fe-64dc-9472-99a344564504 </span><br><span class="line">  └─md5 xfs                                     6095f832-6e1b-4a8a-9e92-4c186a6b03be /mnt/raid5</span><br><span class="line">sr0     iso9660           CentOS 7 x86_64       2018-05-07-12-53-47-00               </span><br><span class="line">[root@Souler7 ~]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<p><strong>删除软RAID设备：</strong></p>
+<pre><code>取消挂载
+umount &lt;设备名&gt;
+停止设备
+mdadm -S &lt;设备名&gt;
+删除raid的配置文件
+rm -f /etc/mdadm.conf
+删除fstab中的相关配置信息
+清除RAID信息
+mdadm --zero-superblock    &lt;raid的成员&gt;
+</code></pre><p><strong>mdadm命令的其他用法</strong></p>
+<pre><code>测试速度
+dd if=/dev/zero of=/dev/md0/f1 bs=1M count=1024 conv=fdatasync
+停止设备
+mdadm -S &lt;raid设备名&gt;
+激活设备
+mdamd -As &lt;raid设备名&gt;
+清除raid信息
+mdadm --zero-superblock /dev/sd{b,c,d,e}1
+模拟/dev/sde1设备损坏
+mdadm &lt;raid设备名&gt; -f /dev/sde1
+删除raid成员sde1
+mdadm &lt;raid设备名&gt; -r /dev/sde1
+加入raid成员sde1
+mdadm &lt;raid设备名&gt; -a /dev/sde1
+扩展RAID容量
+mdadm -G &lt;raid设备名&gt; -n 5 -a &lt;新增的设备名&gt;
+
+注意：在为raid增加容量的时候，需要同步不同的文件系统需要用到不用的命令
+同步xfs文件系统
+    xfs_growfs &lt;挂载点&gt;
+    xfs_growfs /mnt/raid5
+同步ext文件系统
+    resize2fs &lt;raid设备名&gt;
+    resize2fs /dev/md5
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/08/15/第五周-RAID/" data-id="cjm8xlo6y0009fwisgq0vepdl" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/09/02/第七周-进程和计划任务以及shell编程进阶/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          进程和计划任务以及shell编程进阶
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/08/12/第四周-磁盘相关知识以及分区管理和挂载/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">磁盘相关知识以及分区管理和挂载</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <!-- Featured Tags -->
+
+  
+    <!-- Short About -->
+<section class="visible-md visible-lg">
+    <h5><a href="/about/">ABOUT ME</a></h5>
+    <div class="short-about">
+
+        
+
+        
+
+        <!-- SNS Link -->
+        <ul class="list-inline">
+            
+            
+            
+
+            
+
+            
+
+            
+            
+            
+            
+        </ul>
+    </div>
+</section>
+  
+    
+  <h5>RECENT POSTS</h3>
+  <div class="widget">
+    <ul>
+      
+        <li>
+          <a href="/2018/09/02/第七周-进程和计划任务以及shell编程进阶/">进程和计划任务以及shell编程进阶</a>
+        </li>
+      
+        <li>
+          <a href="/2018/08/15/第五周-RAID/">RAID知识点以及命令dd、du、df</a>
+        </li>
+      
+        <li>
+          <a href="/2018/08/12/第四周-磁盘相关知识以及分区管理和挂载/">磁盘相关知识以及分区管理和挂载</a>
+        </li>
+      
+        <li>
+          <a href="/2018/08/09/第四周-rmp命令、yum命令、编译安装实例/">rmp命令、yum命令、编译安装实例</a>
+        </li>
+      
+        <li>
+          <a href="/2018/08/07/第四周-文件查找以及打包压缩/">文件查找以及打包压缩</a>
+        </li>
+      
+    </ul>
+  </div>
+
+  
+    <!-- Friends Blog -->
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 ACan<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
